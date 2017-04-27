@@ -1,0 +1,31 @@
+# File:        global.R
+# Description: calls libraries and defines global contants used throughout code
+# Author:      Ainize Cidoncha
+
+#set directory
+
+#setwd("~/git/AINIZE/Master/APP")
+options(java.parameters = "-Xmx8000m")
+#install and load packages
+packages <- c("shiny", "shinydashboard","Benchmarking","DT","markdown","shinythemes","xlsx" ,"TFDEA", "ggplot2", "dplyr", "tidyr")
+if (length(setdiff(packages, installed.packages())) > 0)
+  install.packages(setdiff(packages, installed.packages()))
+
+library(shiny)
+library(shinydashboard)
+library(DT)
+library(markdown)
+library(shinythemes)
+
+library(xlsx)
+library(Benchmarking)
+library(TFDEA)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+#load my scripts
+source("library/LibraryforRankingAnalysis.R")
+source("library/LibraryforIterativeTool.R")
+
+
