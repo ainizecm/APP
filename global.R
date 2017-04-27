@@ -7,10 +7,12 @@
 #setwd("~/git/AINIZE/Master/APP")
 options(java.parameters = "-Xmx8000m")
 #install and load packages
+devtools::install_github("Appsilon/shiny.semantic")
 packages <- c("shiny", "shinydashboard","Benchmarking","DT","markdown","shinythemes","xlsx" ,"TFDEA", "ggplot2", "dplyr", "tidyr")
 if (length(setdiff(packages, installed.packages())) > 0)
   install.packages(setdiff(packages, installed.packages()))
 
+library(shiny.semantic)
 library(shiny)
 library(shinydashboard)
 library(DT)

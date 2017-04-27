@@ -8,8 +8,6 @@ navbarPage("MY APPLICATION TITLE",
            
            tabPanel("Model Description"),
            
-           
-           
            tabPanel("Analysis",
                     
                     #dashboardPage(#skin = "black",
