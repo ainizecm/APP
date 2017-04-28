@@ -1,9 +1,10 @@
 function(input, output, session) {
  
   
+  
   observe ({
   #If the file is null do nothing, otherwise start reading the inputs
-  file <- input$file.upload
+  file <-input$file.upload
   if (is.null(file)) 
     return(NULL)
   
