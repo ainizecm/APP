@@ -1,5 +1,7 @@
 
-#####MY FUNCTIONS##########
+####################################
+##########ANALYSIS################
+##################################
 
 
 sidebar <- function() {
@@ -19,7 +21,7 @@ sidebar <- function() {
       div(class="item",
           div(class="active header", "Extra Tables"),
           div(class="menu",
-              a(class="item", href="#Detailed Resutls", "Detailed Resutls"),
+              a(class="item", href="#Detailed Results", "Detailed Results"),
               a(class="item", href="#Actions Survey", "Actions Survey")
           )))
 }
@@ -38,7 +40,7 @@ datasettings <- function() {
       fileInput('file.upload',label=' '),
       
       ###INPUT NUMBERS for Interventions###
-      div(class = "ui horizontal divider", uiicon("Block Layout"), "Interventions"),
+      div(class = "ui horizontal divider","Interventions"),
       
       div(class = "ui stackable two column grid", 
           div(class = "column", 
@@ -66,7 +68,7 @@ datasettings <- function() {
       ),
       
       ###INPUT NUMBERS for Actions###
-      div(class = "ui horizontal divider", uiicon("List Layout"), "Actions"),
+      div(class = "ui horizontal divider", "Actions"),
       div(class = "ui stackable two column grid", div(class = "column", 
                                                       numericInput('n_bin_actions', 
                                                                    "Number of Actions",
@@ -107,14 +109,13 @@ InterventionsOutputs<-function(){
 ActionsOutput<-function(){
   #TITLE
   div(class = "ui raised segment",
-      h1(class="ui icon header",
+      h1(class="ui header",
          id="Actions Analysis",
-         uiicon("Doctor"),
          div(class="content", "Actions Analysis")),
       
       #Ranking by block
       h2(class='ui header',id="Actions Ranking","Actions Ranking"),
-      uiOutput("RankingbyBlock")
+      div(style = 'overflow-x: scroll',dataTableOutput(outputId = "ActionsRanking"))
       
       #Maybe actions nice show in each block?
   )
@@ -130,7 +131,7 @@ ExtraTables<-function(){
              div(class="sub header", "Extra tables for deeper analysis and checks"))),
       
       #Ranking by block
-      h2(class='ui header',id="Detailed Results","Detailed Resutls"),
+      h2(class='ui header',id="Detailed Results","Detailed Results"),
       uiOutput("DetailedResults"),
       
       #All interventions Ranking
@@ -140,4 +141,29 @@ ExtraTables<-function(){
 }
 
 
+####################################
+##########ITERATIVE TOOL################
+##################################
+
+Iteration0<-function(){
+  #TITLE
+  div(class = "ui raised segment",
+      h1(class="ui icon header",
+         id="Iteration",
+         uiicon("Doctor"),
+         div(class="content", "Iteration0")),
+      
+      div(class = "ui stackable two column grid", 
+          div(class = "column", 
+              h2(class='ui header',id="inerventions0","Interventions"),
+              div(style = 'overflow-x: scroll',dataTableOutput(outputId = "Iteration0table"))), 
+          div(class = "column", 
+              h2(class='ui header',id="graph0","Graph"),
+              plotOutput("Iteration0graph")) 
+      ),
+      
+      uiOutput("Add0")
+      
+  )
+}
 
