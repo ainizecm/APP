@@ -7,9 +7,10 @@
 #setwd("~/git/AINIZE/Master/APP")
 options(java.parameters = "-Xmx8000m")
 #install and load packages
+#install.packages("devtools")
 #devtools::install_github("Appsilon/shiny.semantic")
 #devtools::install_github("Appsilon/highlighter")
-packages <- c("shiny", "shinydashboard","Benchmarking","DT","markdown","shinythemes","xlsx" ,"TFDEA", "ggplot2", "dplyr", "tidyr","magrittr","formatR")
+packages <- c("shiny", "shinydashboard","Benchmarking","DT","markdown","shinythemes","shinyjs","xlsx" ,"TFDEA", "ggplot2", "dplyr", "tidyr","magrittr","formatR")
 if (length(setdiff(packages, installed.packages())) > 0)
   install.packages(setdiff(packages, installed.packages()))
 Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre7')
