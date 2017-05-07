@@ -97,7 +97,8 @@ resultsbyResp<-function(excel,blocksheet,rowindex,weights,n_bin_actions=57){
   
   #Generate a data.frame with all the Marks
   RESULTS<-data.frame(Block=PERM$Block,
-                      Interventions=PERM$Code,OutcomesMark=round(outmark,2),
+                      Description=PERM$Decription,
+                      Code=PERM$Code,OutcomesMark=round(outmark,2),
                       ActionsComplMark=round(ActionsComplmark,2),
                       FinancingMark=round(costimpmarks+fsourcemarks,2),
                       ComplexityMark=round(ActionsComplmark+costimpmarks+fsourcemarks,2))
@@ -112,7 +113,7 @@ grafico<-function(results){
     outp<-results$Average_Outcomes
     eff<-dea(inp,outp)
     DEA<-data.frame(eff=eff$eff)
-    dea.plot.frontier(inp,outp,txt=results$Interventions,xlab="Complexity",ylab="Outcomes",
+    dea.plot.frontier(inp,outp,txt=results$Code,xlab="Complexity",ylab="Outcomes",
                     pch=ifelse(outp>median(outp)&inp<median(inp), 19, 1))
       axis(1,labels=FALSE,tick=T,line=F,pos=median(outp),lwd.ticks=0)
       axis(2,labels=FALSE,tick=T,line=F,pos=median(inp),lwd.ticks=0)}

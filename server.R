@@ -15,9 +15,11 @@ function(input, output, session) {
   EXCEL<-file$datapath
 
   #Performance Matrix 
-  PM<-read.xlsx(EXCEL,"PerformanceMatrix" ,startRow=5,encoding='UTF-8',header=TRUE)
+  PM<-read.xlsx2(EXCEL,"PerformanceMatrix" ,startRow=5,encoding='UTF-8',header=TRUE)
+  PM[,c("encoding")]<-NULL
+  PM[,c(4:ncol(PM))]<-apply(PM[,c(4:ncol(PM))],c(1,2),as.numeric)
   output$PM<-renderDataTable({PM})
-
+  print(PM)
 
   #Names of the interventins and actions
   #Read the actions names from the top of of the Performance Matrix NEED TO CHANCHE IF ACTIONS CHANGE
@@ -68,9 +70,9 @@ function(input, output, session) {
      criandstr<-FinalWeights(EXCEL,n_bin_actions,n_cri_resp)
      
     
-     #Define summary data frame to populate later
-     FinalInterventionsResults<-data.frame(Interventions=vector(),Average_Outcomes=vector(),Average_Complexity=vector())
-     summary<-list()
+     #Define strategy data frame to populate later
+     FinalInterventionsResults<-data.frame(Block=vector(),Description=vector(),Code=vector(),Average_Outcomes=vector(),Average_Complexity=vector())
+     strategy<-list()
      
      
      #Generate each block results
@@ -81,64 +83,73 @@ function(input, output, session) {
          start<-7+(1+n_int[i])*(j-1) #Int start in row 7 in the template+the number of interventions and two extra rows for each new respondant
          end<-7+(1+n_int[i])*(j-1)+n_int[i]-1 #sum the number of interventions to now where to end
          #Sheet
-         sheet<-as.character(paste0("IC",i))
+         #sheet<-as.character(paste0("IC",i))
          
          #Generate resuls for each respondant
          print(paste("Computing results...",j, "in block",i))
-         results<-resultsbyResp(EXCEL,sheet,start:end,criandstr,n_bin_actions)
+         results<-resultsbyResp(EXCEL,i,start:end,criandstr,n_bin_actions)
          assign(paste0("resultsB",i,"_R",j),results)
          
          
-         #Summary dataframe
-         print(paste("Generating summary dataset...",j, "in block",i))
-         if (j==1) {summary[[i]]<-data.frame(results[,c(1,2,3,6)])}#If it is the first respondant it will get the names
-         else{summary[[i]]<-cbind(summary[[i]],results[,c(3,6)])}
+         #strategy dataframe
+         print(paste("Generating strategy dataset...",j, "in block",i))
+         if (j==1) {strategy[[i]]<-data.frame(results[,c(1,2,3,4,7)])}#If it is the first respondant it will get the names
+         else{strategy[[i]]<-cbind(strategy[[i]],results[,c(4,7)])}
        }
        print(paste("Generating averages",j, "in block",i))
-       summary[[i]]$Average_Outcomes<-round(rowMeans(summary[[i]][which(colnames(summary[[i]])=="OutcomesMark")]),2)
-       summary[[i]]$Average_Complexity<-round(rowMeans(summary[[i]][which(colnames(summary[[i]])=="ComplexityMark")]),2)
+       strategy[[i]]$Average_Outcomes<-round(rowMeans(strategy[[i]][which(colnames(strategy[[i]])=="OutcomesMark")]),2)
+       strategy[[i]]$Average_Complexity<-round(rowMeans(strategy[[i]][which(colnames(strategy[[i]])=="ComplexityMark")]),2)
        
        
        #Generate a table showing the final results for each intervention
        print(paste("Generating FinalInterventions dataframe...",j, "in block",i))
        FinalInterventionsResults<-rbind(FinalInterventionsResults,
-                                        data.frame(Internventions=summary[[i]]$Interventions,
-                                                   Outcomes=summary[[i]]$Average_Outcomes,
-                                                   Complexity=summary[[i]]$Average_Complexity))
+                                        data.frame(Block=strategy[[i]]$Block,
+                                                     Descrition=strategy[[i]]$Description,
+                                                     Code=strategy[[i]]$Code,
+                                                     Outcomes=strategy[[i]]$Average_Outcomes,
+                                                    Complexity=strategy[[i]]$Average_Complexity))
      }
   
      
-##MAYBE???SAVE SUMMARY AND FINALINTERVENTIONS????##
+##MAYBE???SAVE strategy AND FINALINTERVENTIONS????##
      
   
      ####################################
      ##########GENERATE OUTPUTS###########
      ###################################
-     
+  #Show the final matrix
+  output$FinalM<-DT::renderDataTable({datatable(FinalInterventionsResults,
+                                               filter = 'top',class = 'white-space: nowrap')
+                                      })
      
   #Show results for each block-Table and plot
   output$RankingbyBlock<-renderUI({
-    summary_list<-lapply(1:n_blocks,function(i){
+    strategy_list<-lapply(1:n_blocks,function(i){
       fluidPage(paste("BLOCK",i,"RESULTS"),
                 fluidRow(div(style="color:white", renderText("  jkkjh "))),
                 fluidRow(div(style="color:white", renderText("  jkkjh "))),
                 fluidRow(renderText("   ")),
       fluidRow(
-      column(6,renderDataTable({
-        data.frame(Int=summary[[i]]$Interventions,
-                   Outcomes=summary[[i]]$Average_Outcomes,
-                   Complexity=summary[[i]]$Average_Complexity)
-      }))
-      ,column(6,renderPlot({grafico(summary[[i]])}))
+      column(6,
+             DT::renderDataTable({
+               datatable(
+                    data.frame(
+                    Description=sapply(strategy[[i]]$Description,function(t) paste0(strtrim(t,20),'...')),
+                    Code=strategy[[i]]$Code,
+                    Outcomes=strategy[[i]]$Average_Outcomes,
+                    Complexity=strategy[[i]]$Average_Complexity),
+                    class = 'white-space: nowrap'
+      )}))
+      ,column(6,renderPlot({grafico(strategy[[i]])}))
          ),
       fluidRow(div(style="color:white", renderText("  jkkjh "))),
       fluidRow(div(style="color:white", renderText("  jkkjh "))))})
-    do.call(tagList, summary_list)
+    do.call(tagList, strategy_list)
     })
 
   
-  #Show the final matrix
-  output$FinalM<-renderDataTable({FinalInterventionsResults})
+
   
   
   #Show the ranking for actions
@@ -154,8 +165,8 @@ function(input, output, session) {
   ##Details by respondant if you want to check some results
   #Show results for each respondant  
   output$DetailedResults<-renderUI({
-    summary_list<-lapply(1:n_blocks,function(i){renderDataTable({summary[[i]]},caption=paste0('Block',i))})
-    do.call(tagList, summary_list)
+    strategy_list<-lapply(1:n_blocks,function(i){renderDataTable({strategy[[i]]},caption=paste0('Block',i))})
+    do.call(tagList, strategy_list)
   })
   
   output$ActionsSurvey<-renderDataTable({
@@ -182,8 +193,8 @@ function(input, output, session) {
  x<-rep(0,n_totalint)
  y<-rep(0,n_bin_actions)
 
-#Run summary for first situation
-Iteration0<-summary(x,y
+#Run strategy for first situation
+Iteration0<-strategy(x,y
          ,PM
          ,FinalInterventionsResults$Outcomes
          ,criandstr$weights
@@ -236,21 +247,21 @@ observeEvent(input$Add0,{
   s2<-input$Iteration0table_rows_selected
   x[s2]<-1
   # y<-rep(0,n_bin_actions)
-  Iteration1<-summary(x,y
+  Iteration1<-strategy(x,y
                       ,PM
                       ,FinalInterventionsResults$Outcomes
                       ,criandstr$weights
                       ,n_bin_actions
                       ,n_totalint)
   
-  #SHOW SUMMARY OF STRATEGY
-  output$summary1<-renderText({paste("The percentage of Outcomes reached by the strategy is",Iteration1[[1]] ) })
-  output$summary2<-renderText({paste("The percentage of Complexity reached by the strategy is",Iteration1[[2]] ) })
-  output$summary3<-renderText({
+  #SHOW strategy OF STRATEGY
+  output$strategy1<-renderText({paste("The percentage of Outcomes reached by the strategy is",Iteration1[[1]] ) })
+  output$strategy2<-renderText({paste("The percentage of Complexity reached by the strategy is",Iteration1[[2]] ) })
+  output$strategy3<-renderText({
     int<-as.data.frame(Iteration1[[3]])
     count_int<-sum(int$choose)
     paste("The number of selected Interventions is",count_int ) })
-  output$summary4<-renderText({
+  output$strategy4<-renderText({
     df_acc<-as.data.frame(Iteration1[[4]])
     count_acc<-sum(df_acc$need[1:n_bin_actions])
     paste("The number of needed Actions is",count_acc ) })
