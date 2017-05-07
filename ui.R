@@ -6,36 +6,40 @@ navbarPage("MY APPLICATION TITLE",
            
            #Define the panels
            
-           tabPanel("Model Description"),
+           tabPanel("Model Description")
+           ,
            
-           tabPanel("Analysis1",
+           tabPanel("Analysis1"
+                    ,
                     semanticPage(
-                      tags$head(tags$style(HTML(css))),
+                      tags$head(tags$style(HTML(css)))
+                    ,
                       useShinyjs(),
-                      sidebar(),
-                      div(style="margin-left: 210px",
-                          div(id="Configure your data", class="ui container",
-                              datasettings(),
-                              InterventionsOutputs(),
-                              ActionsOutput(),
-                              ExtraTables()
-                              
+                      sidebar()
+                    ,
+                    div(style="margin-left: 210px",
+                        div(id="Configure your data", class="ui container",
+                            datasettings(),
+                            InterventionsOutputs(),
+                            ActionsOutput(),
+                            ExtraTables()
 
-                          )
-                      )
+
+                        )
                     )
-
+                    )
+                    
            ),
            
            
-           ####################################
-           ##########ITERATIVE TOOL###########
-           ###################################
-           
+           # ####################################
+           # ##########ITERATIVE TOOL###########
+           # ###################################
+           # 
            tabPanel("Strategy Constuction",
                     Iteration0()
            ),
-          
+           
            
            
            
