@@ -73,10 +73,11 @@ function(input, output, session) {
      #Define strategy data frame to populate later
      FinalInterventionsResults<-data.frame(Block=vector(),Description=vector(),Code=vector(),Average_Outcomes=vector(),Average_Complexity=vector())
      strategy<-list()
-     
+     blocknames<-vector()
      
      #Generate each block results
      for (i in 1:n_blocks){#Loop throught the blocks
+       blocknames[i]<-PM[7,"Code"]
        for (j in 1:n_resp[i]){#Loop through the respondents
          print(paste("Computing responses for respondat",j, "in block",i))
          #Define the starting and ending rows
@@ -134,11 +135,12 @@ function(input, output, session) {
       column(6,
              DT::renderDataTable({
                datatable(
-                    data.frame(
-                    Description=sapply(strategy[[i]]$Description,function(t) paste0(strtrim(t,20),'...')),
-                    Code=strategy[[i]]$Code,
-                    Outcomes=strategy[[i]]$Average_Outcomes,
-                    Complexity=strategy[[i]]$Average_Complexity),
+                # FinalInterventionsResults[which(FinalInterventionsResults$Block==blocknames[i]),],
+                     data.frame(
+                     Description=sapply(strategy[[i]]$Description,function(t) paste0(strtrim(t,20),'...')),
+                     Code=strategy[[i]]$Code,
+                     Outcomes=strategy[[i]]$Average_Outcomes,
+                     Complexity=strategy[[i]]$Average_Complexity),
                     class = 'white-space: nowrap'
       )}))
       ,column(6,renderPlot({grafico(strategy[[i]])}))
