@@ -12,7 +12,7 @@ navbarPage("MY APPLICATION TITLE",
                     semanticPage(
                       tags$head(tags$style(HTML(css))),
                       useShinyjs(),
-                      sidebar(),
+                      sidebar1(),
                       div(style="margin-left: 210px",
                           div(id="Configure your data", class="ui container",
                               datasettings(),
@@ -33,7 +33,18 @@ navbarPage("MY APPLICATION TITLE",
            ###################################
            
            tabPanel("Strategy Constuction",
-                    Iteration0()
+                    semanticPage(
+                      tags$head(tags$style(HTML(css))),
+                      useShinyjs(),
+                      sidebar2(),
+                      div(style="margin-left: 210px",
+                          div(id="Iterations", class="ui container",
+                              Iteration(0)
+                              #,
+                              #Iteration(1)
+                          )
+                      )
+                    )
            ),
           
            

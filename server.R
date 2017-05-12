@@ -191,8 +191,12 @@ Iteration0<-summary(x,y
          ,n_totalint)
 
 #OutputTable in Iteration 0
-output$Iteration0table<-DT::renderDataTable({
-  datatable(as.data.frame(Iteration0[[5]]),filter = 'top',class = 'white-space: nowrap')
+output$Iteration0table<-renderDataTable({
+  #datatable(
+    #as.data.frame(
+    Iteration0[[5]]
+  #)
+  #,filter = 'top',class = 'white-space: nowrap')
 })
 
 #Read what happens on the table
@@ -259,7 +263,7 @@ observeEvent(input$Add0,{
 #SHOW INTERVENTIONS TO ADD 
 
 #OutputTable in Iteration 1
-output$Iteration1table<-DT::renderDataTable({
+output$Iteration1table<-renderDataTable({
   datatable(as.data.frame(Iteration1[[5]]),filter = 'top',class = 'white-space: nowrap')
 })
 s11<-input$Iteration1table_rows_all #Shows rows after being filtered

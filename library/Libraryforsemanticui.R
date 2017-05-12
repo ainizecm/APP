@@ -4,7 +4,7 @@
 ##################################
 
 
-sidebar <- function() {
+sidebar1 <- function() {
   div(class="ui sidebar inverted vertical visible menu",
       div(style = "width: 100%; height:100px"),
       div(class="item",
@@ -145,6 +145,18 @@ ExtraTables<-function(){
 ##########ITERATIVE TOOL################
 ##################################
 
+sidebar2 <- function() {
+  div(class="ui sidebar inverted vertical visible menu",
+      div(style = "width: 100%; height:100px"),
+      div(class="item",
+          div(class="active header", "Iterations")),
+          div(class="menu",
+              a(class="item", href="#Iteration0", "Iteration0"),
+              a(class="item", href="#Iteration1", "Iteration1")))
+          
+}
+
+
 Iteration0<-function(){
   #TITLE
   div(class = "ui raised segment",
@@ -165,5 +177,27 @@ Iteration0<-function(){
       uiOutput("Add0")
       
   )
+}
+
+Iteration<-function(number){
+  #TITLE
+  div(class = "ui raised segment",
+      h1(class="ui icon header",
+         id="Iteration",
+         uiicon("Doctor"),
+         div(class="content", paste0("Iteration",number)),
+      
+      div(class = "ui stackable two column grid", 
+          div(class = "column", 
+              h2(class='ui header',id=paste0("inerventions",number),"Interventions"),
+              div(style = 'overflow-x: scroll',dataTableOutput(outputId =paste0("Iteration",number,"table") ))), 
+          div(class = "column", 
+              h2(class='ui header',id=paste0("graph", number),"Graph"),
+              plotOutput("Iteration0graph")) 
+      ),
+      
+      uiOutput("Add0")
+      
+  ))
 }
 
