@@ -10,11 +10,12 @@ options(java.parameters = "-Xmx8000m")
 # install.packages("devtools")
 #devtools::install_github("Appsilon/shiny.semantic")
 #devtools::install_github("Appsilon/highlighter")
-packages <- c("shiny", "shinydashboard","Benchmarking","htmltools","DT","markdown","shinythemes","shinyjs","xlsx" ,"TFDEA", "ggplot2", "dplyr", "tidyr","magrittr","formatR")
+packages <- c("shiny", "yaml","shinydashboard","Benchmarking","htmltools","DT","markdown","shinythemes","shinyjs","xlsx" ,"TFDEA", "ggplot2", "dplyr", "tidyr","magrittr","formatR")
 if (length(setdiff(packages, installed.packages())) > 0)
   install.packages(setdiff(packages, installed.packages()))
 #Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre7') #on mac or lenovo
 Sys.setenv(JAVA_HOME='C:\\Archivos de programa\\Java\\jre1.8.0_131') #on algbertos lg
+library(yaml)
 library(shiny.semantic)
 library(htmltools)
 library(shinyjs)
