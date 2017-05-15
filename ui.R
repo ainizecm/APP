@@ -6,11 +6,14 @@ navbarPage("MY APPLICATION TITLE",
            
            #Define the panels
            
-           tabPanel("Model Description"),
+           tabPanel("Model Description")
+           ,
            
-           tabPanel("Analysis1",
+           tabPanel("Analysis1"
+                    ,
                     semanticPage(
-                      tags$head(tags$style(HTML(css))),
+                      tags$head(tags$style(HTML(css)))
+                    ,
                       useShinyjs(),
                       sidebar1(),
                       div(style="margin-left: 210px",
@@ -19,19 +22,16 @@ navbarPage("MY APPLICATION TITLE",
                               InterventionsOutputs(),
                               ActionsOutput(),
                               ExtraTables()
-                              
-
-                          )
-                      )
+                          
                     )
-
-           ),
+                    
+           ))),
            
            
-           ####################################
-           ##########ITERATIVE TOOL###########
-           ###################################
-           
+           # ####################################
+           # ##########ITERATIVE TOOL###########
+           # ###################################
+           # 
            tabPanel("Strategy Constuction",
                     semanticPage(
                       tags$head(tags$style(HTML(css))),
@@ -46,7 +46,7 @@ navbarPage("MY APPLICATION TITLE",
                       )
                     )
            ),
-          
+           
            
            
            

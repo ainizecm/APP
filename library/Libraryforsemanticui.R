@@ -46,24 +46,24 @@ datasettings <- function() {
           div(class = "column", 
               numericInput('n_totalint', 
                            "Number of Total Interventions",
-                           value=54, min = NA, max = NA, step = NA,
+                           value=37, min = NA, max = NA, step = NA,
                            width = NULL)), 
           div(class = "column", 
               numericInput('n_blocks', 
                            "Number of Blocks", 
-                           value=4, min = NA, max = NA, step = NA,
+                           value=3, min = NA, max = NA, step = NA,
                            width = NULL)) 
       ),
       div(class = "ui stackable two column grid", 
           div(class = "column", 
               textInput('n_int', 
                         "Number of Interventions in each block  (write them separate by /,i.e.,if 3 blocks 19/10/15)",
-                        value='19/14/11/10', 
+                        value='11/11/15', 
                         width = NULL)), 
           div(class = "column", 
               textInput('n_resp', 
                         "Number of Respondants in each block  (write them separate by /,i.e.,if 3 blocks 3/5/3)",
-                        value='3/4/3/3',
+                        value='2/4/3',
                         width = NULL)) 
       ),
       
@@ -95,14 +95,14 @@ InterventionsOutputs<-function(){
          uiicon("Doctor"),
          div(class="content", "Interventions Outcomes",
              div(class="sub header", "Analysis and Ranking of Interventions"))),
-      
-      #Ranking by block
-      h2(class='ui header',id="Ranking by Block","Ranking by Block"),
-      uiOutput("RankingbyBlock"),
   
       #All interventions Ranking
       h2(class='ui header',id="All Interventions Ranking","All Interventions Ranking"),
-      div(style = 'overflow-x: scroll',dataTableOutput(outputId = "FinalM"))
+      div(style = 'overflow-x: scroll',dataTableOutput(outputId = "FinalM")),
+      
+      #Ranking by block
+      h2(class='ui header',id="Ranking by Block","Ranking by Block"),
+      uiOutput("RankingbyBlock")
   )
 }
 
@@ -179,6 +179,7 @@ Iteration0<-function(){
   )
 }
 
+
 Iteration<-function(number){
   #TITLE
   div(class = "ui raised segment",
@@ -200,4 +201,10 @@ Iteration<-function(number){
       
   ))
 }
+
+
+css <- "
+#examples > div > .header {
+margin-top: 1em;
+}"
 

@@ -21,8 +21,8 @@ setwd("~/git/AINIZE/Master/APP")
 EXCEL<-'data/DATA2_v2.xlsx'
 #EXCEL<-'data/cat_test2.xlsx'
 
-source("library_old_functions/LibraryforRankingAnalysisFixedCriteria.R")
-source("library_old_functions/LibraryforIterativeTool.R")
+source("library/LibraryforRankingAnalysis.R")
+source("library/LibraryforIterativeTool.R")
 #Number of Blocks
 n_blocks=4#3#4
 
@@ -44,15 +44,15 @@ n_cri_resp<-4
 lastrow<-6+n_totalint
 
 ###1.Read PM
-PM<-read.xlsx(EXCEL,startRow = 5,"PerformanceMatrix",encoding='UTF-8',header=TRUE)
-
+PM<-read.xlsx2(EXCEL,startRow = 5,"PerformanceMatrix",encoding='UTF-8',header=TRUE)
+PM[,c("encoding")]<-NULL
 ###2.read criteria weights and compine with action compl
 criandstr<-FinalWeights(EXCEL,n_bin_actions,n_cri_resp)
 
 
 ###3.compute results
 FinalInterventionsResults<-data.frame(Interventions=vector(),Average_Outcomes=vector(),Average_Complexity=vector())
-summary<-list()
+strategy<-list()
 
 for (i in 1:n_blocks){#Loop throught the blocks
   for (j in 1:n_resp[i]){#Loop through the respondents
@@ -69,23 +69,23 @@ for (i in 1:n_blocks){#Loop throught the blocks
     assign(paste0("resultsB",i,"_R",j),results)
     
     
-    #Summary dataframe
-    print(paste("Generating summary dataset...",j, "in block",i))
-    if (j==1) {summary[[i]]<-data.frame(results[,c(1,2,3,6)])}#If it is the first respondant it will get the names
-    else{summary[[i]]<-cbind(summary[[i]],results[,c(3,6)])}
+    #strategy dataframe
+    print(paste("Generating strategy dataset...",j, "in block",i))
+    if (j==1) {strategy[[i]]<-data.frame(results[,c(1,2,3,6)])}#If it is the first respondant it will get the names
+    else{strategy[[i]]<-cbind(strategy[[i]],results[,c(3,6)])}
   }
   print(paste("Generating averages",j, "in block",i))
-  summary[[i]]$Average_Outcomes<-round(rowMeans(summary[[i]][which(colnames(summary[[i]])=="OutcomesMark")]),2)
-  summary[[i]]$Average_Complexity<-round(rowMeans(summary[[i]][which(colnames(summary[[i]])=="ComplexityMark")]),2)
+  strategy[[i]]$Average_Outcomes<-round(rowMeans(strategy[[i]][which(colnames(strategy[[i]])=="OutcomesMark")]),2)
+  strategy[[i]]$Average_Complexity<-round(rowMeans(strategy[[i]][which(colnames(strategy[[i]])=="ComplexityMark")]),2)
   
   
   
   #Generate a table showing the final results for each intervention
   print(paste("Generating FinalInterventions dataframe...",j, "in block",i))
   FinalInterventionsResults<-rbind(FinalInterventionsResults,
-                                   data.frame(Internventions=summary[[i]]$Interventions,
-                                              Outcomes=summary[[i]]$Average_Outcomes,
-                                              Complexity=summary[[i]]$Average_Complexity))
+                                   data.frame(Internventions=strategy[[i]]$Interventions,
+                                              Outcomes=strategy[[i]]$Average_Outcomes,
+                                              Complexity=strategy[[i]]$Average_Complexity))
 }
 
 weights<-criandstr
@@ -113,10 +113,12 @@ t<-needed_actions_complexity(x,y,weights=criandstr$weights,PM,n_bin_actions)
 extra_intervention(x,y,PM=PM,
                              outmark=FinalInterventionsResults$Outcomes,weights_vector=criandstr$weights,n_bin_actions)
   
+
 x[1]<-1
 x[8]<-1
 
-iteration<-summary(x=x,y=y
+
+iteration<-strategy(x=x,y=y
         ,PM
         ,outmark=FinalInterventionsResults$Outcomes
         ,weights_vector=criandstr$weights,
@@ -126,7 +128,9 @@ iteration[[5]]
 grafico_it(iteration[[5]])
 
 
-###TESTING SUMMARY FUNCTION
+strategy(x=rep(0,n_totalint),y=rep(0,n_bin_actions),PM,outmark,weights_vector,n_bin_actions,n_totalint)
+
+###TESTING strategy FUNCTION
 
 x[which(x>1)]<-1 
 
