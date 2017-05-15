@@ -124,6 +124,14 @@ function(input, output, session) {
                                                filter = 'top',class = 'white-space: nowrap')
                                       })
      
+     output$downloadData1 <- downloadHandler(
+       filename = function() { paste('FinalInterventionsResults', '.csv', sep='') },
+       content = function(file) {
+         write.csv(FinalInterventionsResults, file)
+       }
+     )
+     
+     
   #Show results for each block-Table and plot
   output$RankingbyBlock<-renderUI({
     strategy_list<-lapply(1:n_blocks,function(i){

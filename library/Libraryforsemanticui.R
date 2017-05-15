@@ -99,6 +99,7 @@ InterventionsOutputs<-function(){
       #All interventions Ranking
       h2(class='ui header',id="All Interventions Ranking","All Interventions Ranking"),
       div(style = 'overflow-x: scroll',dataTableOutput(outputId = "FinalM")),
+      div(downloadButton(outputId="downloadData1",'Download')),
       
       #Ranking by block
       h2(class='ui header',id="Ranking by Block","Ranking by Block"),
@@ -191,7 +192,7 @@ Iteration<-function(number){
       div(class = "ui stackable two column grid", 
           div(class = "column", 
               h2(class='ui header',id=paste0("inerventions",number),"Interventions"),
-              div(style = 'overflow-x: scroll',dataTableOutput(outputId =paste0("Iteration",number,"table") ))), 
+              div(style = 'overflow-x: scroll;font-size: 50%; width: 100%',dataTableOutput(outputId =paste0("Iteration",number,"table") ))), 
           div(class = "column", 
               h2(class='ui header',id=paste0("graph", number),"Graph"),
               plotOutput("Iteration0graph")) 
