@@ -68,7 +68,7 @@ FinalWeights<-function(excel,n_bin_actions=57,n_cri_resp=4){
 resultsbyResp<-function(excel,blocksheet,rowindex,weights,n_bin_actions=57){
   #lastcolum<-n_bin_actions+15
   #Read the matrix on the selected rows
-  PERM<-read.xlsx(excel,blocksheet,
+  PERM<-read.xlsx(excel,sheetIndex = blocksheet,
                   rowIndex =c(5,rowindex), 
                   ##colIndex = 1:lastcolum,
                   header=TRUE)

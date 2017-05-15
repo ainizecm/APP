@@ -61,11 +61,11 @@ for (i in 1:n_blocks){#Loop throught the blocks
     start<-7+(1+n_int[i])*(j-1) #Int start in row 7 in the template+the number of interventions and two extra rows for each new respondant
     end<-7+(1+n_int[i])*(j-1)+n_int[i]-1 #sum the number of interventions to now where to end
     #Sheet
-    sheet<-as.character(paste0("IC",i))
+    #sheet<-as.character(paste0("IC",i))
     
     #Generate resuls for each respondant
     print(paste("Computing results...",j, "in block",i))
-    results<-resultsbyResp(EXCEL,sheet,start:end,criandstr,n_bin_actions)
+    results<-resultsbyResp(EXCEL,i,start:end,criandstr,n_bin_actions)
     assign(paste0("resultsB",i,"_R",j),results)
     
     
@@ -171,4 +171,5 @@ for (i in 1:n_bin_actions){
   
   df_actions$extraint[i]<-sum(x_pos_new-x_pos_old) #the difference between them is the new possible int
   df_actions$extraint[c(n_bin_actions+1,n_bin_actions+2)]<-""}
+
 
