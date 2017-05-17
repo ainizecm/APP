@@ -40,7 +40,7 @@ navbarPage("MY APPLICATION TITLE",
                       div(style="margin-left: 210px",
                           div(id="Iterations", class="ui container",
                               Iteration(0),
-                              Iteration(1)
+                              conditionalPanel(condition='input.Add0== 1',Iteration(1)) 
                               
                           )
                       )

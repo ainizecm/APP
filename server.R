@@ -225,6 +225,13 @@ output$strategy04<-renderText({
   count_acc<-sum(df_acc$need[1:n_bin_actions])
   paste("The number of needed Actions is",count_acc ) })
 
+output$Iteration0Interventions<-renderDataTable({Iteration0[[3]]})
+output$Iteration0Actions<-renderDataTable({Iteration0[[4]]})
+
+
+
+
+
 #OutputTable in Iteration 0
 output$Iteration0table<-renderDataTable({
   datatable(
@@ -285,8 +292,8 @@ observeEvent(input$Add0,{
                       ,n_totalint)
   
   #SHOW SUMMARY OF STRATEGY
-  output$strategy11<-renderText({paste("The percentage of Outcomes reached by the strategy is",Iteration1[[1]] ) })
-  output$strategy12<-renderText({paste("The percentage of Complexity reached by the strategy is",Iteration1[[2]] ) })
+  output$strategy11<-renderText({paste("The percentage of Outcomes reached by the strategy is",round(Iteration1[[1]],2),"%" ) })
+  output$strategy12<-renderText({paste("The percentage of Complexity reached by the strategy is",round(Iteration1[[2]],2),"%" ) })
   output$strategy13<-renderText({
     int<-as.data.frame(Iteration1[[3]])
     count_int<-sum(int$choose)
@@ -296,6 +303,11 @@ observeEvent(input$Add0,{
     count_acc<-sum(df_acc$need[1:n_bin_actions])
     paste("The number of needed Actions is",count_acc ) })
  
+  output$Iteration1Interventions<-renderDataTable({Iteration1[[3]]})
+  output$Iteration1Actions<-renderDataTable({Iteration1[[4]]})
+  
+  
+  
   
 #SHOW INTERVENTIONS TO ADD 
 
