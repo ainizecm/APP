@@ -1,0 +1,10 @@
+name: test_app
+title: Test_app
+account: acm1292
+server: shinyapps.io
+appId: 181339
+bundleId: 830846
+url: https://acm1292.shinyapps.io/test_app/
+when: 1495029011.02841
+asMultiple: FALSE
+asStatic: FALSE
