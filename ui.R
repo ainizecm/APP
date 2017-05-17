@@ -9,7 +9,7 @@ navbarPage("MY APPLICATION TITLE",
            tabPanel("Model Description")
            ,
            
-           tabPanel("Analysis1"
+           tabPanel("Analysis"
                     ,
                     semanticPage(
                       tags$head(tags$style(HTML(css)))
@@ -39,9 +39,9 @@ navbarPage("MY APPLICATION TITLE",
                       sidebar2(),
                       div(style="margin-left: 210px",
                           div(id="Iterations", class="ui container",
-                              Iteration(0)
-                              #,
-                              #Iteration(1)
+                              Iteration(0),
+                              Iteration(1)
+                              
                           )
                       )
                     )

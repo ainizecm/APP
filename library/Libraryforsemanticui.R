@@ -158,28 +158,6 @@ sidebar2 <- function() {
 }
 
 
-Iteration0<-function(){
-  #TITLE
-  div(class = "ui raised segment",
-      h1(class="ui icon header",
-         id="Iteration",
-         uiicon("Doctor"),
-         div(class="content", "Iteration0")),
-      
-      div(class = "ui stackable two column grid", 
-          div(class = "column", 
-              h2(class='ui header',id="inerventions0","Interventions"),
-              div(style = 'overflow-x: scroll',dataTableOutput(outputId = "Iteration0table"))), 
-          div(class = "column", 
-              h2(class='ui header',id="graph0","Graph"),
-              plotOutput("Iteration0graph")) 
-      ),
-      
-      uiOutput("Add0")
-      
-  )
-}
-
 
 Iteration<-function(number){
   #TITLE
@@ -188,21 +166,38 @@ Iteration<-function(number){
          id="Iteration",
          uiicon("Doctor"),
          div(class="content", paste0("Iteration",number)),
-      
+         
+         #Show summary
+         div(class = "ui horizontal divider","Summary"),
+         div(class = "ui stackable two column grid",
+             div(class = "column",
+                 #h2(class='ui header',id=paste0("inerventions",number),"Interventions"),
+                 div(textOutput(outputId =paste0("strategy",number,"1") )),
+                 div(textOutput(outputId =paste0("strategy",number,"3") ))
+                 ),
+             div(class = "column",
+                 #h2(class='ui header',id=paste0("graph", number),"Graph"),
+                 div(textOutput(outputId =paste0("strategy",number,"2") )),
+                 div(textOutput(outputId =paste0("strategy",number,"4") )))
+         ),
+         
+         #Show table and graph
+         div(class = "ui horizontal divider","Possible Interventions To Add"),
       div(class = "ui stackable two column grid", 
           div(class = "column", 
               h2(class='ui header',id=paste0("inerventions",number),"Interventions"),
               div(style = 'overflow-x: scroll;font-size: 50%; width: 100%',dataTableOutput(outputId =paste0("Iteration",number,"table") ))), 
           div(class = "column", 
               h2(class='ui header',id=paste0("graph", number),"Graph"),
-              plotOutput("Iteration0graph")) 
+              plotOutput(paste0("Iteration",number,"graph")) 
       ),
       
-      uiOutput("Add0")
-      
+      uiOutput(paste0("Add",number))
+      )
   ))
 }
 
+Iteration1<-Iteration(1)
 
 css <- "
 #examples > div > .header {

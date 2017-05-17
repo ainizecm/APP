@@ -203,6 +203,8 @@ function(input, output, session) {
  x<-rep(0,n_totalint)
  y<-rep(0,n_bin_actions)
 
+ 
+ 
 #Run strategy for first situation
 Iteration0<-strategy(x,y
          ,PM
@@ -211,13 +213,25 @@ Iteration0<-strategy(x,y
          ,n_bin_actions
          ,n_totalint)
 
+#SHOW SUMMARY OF STRATEGY
+output$strategy01<-renderText({paste("The percentage of Outcomes reached by the strategy is",Iteration0[[1]] ) })
+output$strategy02<-renderText({paste("The percentage of Complexity reached by the strategy is",Iteration0[[2]] ) })
+output$strategy03<-renderText({
+  int<-as.data.frame(Iteration0[[3]])
+  count_int<-sum(int$choose)
+  paste("The number of selected Interventions is",count_int ) })
+output$strategy04<-renderText({
+  df_acc<-as.data.frame(Iteration0[[4]])
+  count_acc<-sum(df_acc$need[1:n_bin_actions])
+  paste("The number of needed Actions is",count_acc ) })
+
 #OutputTable in Iteration 0
 output$Iteration0table<-renderDataTable({
-  #datatable(
+  datatable(
     #as.data.frame(
     Iteration0[[5]]
   #)
-  #,filter = 'top',class = 'white-space: nowrap')
+  ,filter = 'top',class = 'white-space: nowrap')
 })
 
 #Read what happens on the table
@@ -249,6 +263,8 @@ output$Iteration0graph<-renderPlot({
 })
 
 output$Add0<-renderUI({actionButton("Add0", "Add selected Interventions to the strategy")})
+#Make an buttom to finish the strategy
+#and observe Event to show the final strategy in a nice graph(build the graph)
 
 ####################################
 ##########ITERATIOn 1###########
@@ -268,14 +284,14 @@ observeEvent(input$Add0,{
                       ,n_bin_actions
                       ,n_totalint)
   
-  #SHOW strategy OF STRATEGY
-  output$strategy1<-renderText({paste("The percentage of Outcomes reached by the strategy is",Iteration1[[1]] ) })
-  output$strategy2<-renderText({paste("The percentage of Complexity reached by the strategy is",Iteration1[[2]] ) })
-  output$strategy3<-renderText({
+  #SHOW SUMMARY OF STRATEGY
+  output$strategy11<-renderText({paste("The percentage of Outcomes reached by the strategy is",Iteration1[[1]] ) })
+  output$strategy12<-renderText({paste("The percentage of Complexity reached by the strategy is",Iteration1[[2]] ) })
+  output$strategy13<-renderText({
     int<-as.data.frame(Iteration1[[3]])
     count_int<-sum(int$choose)
     paste("The number of selected Interventions is",count_int ) })
-  output$strategy4<-renderText({
+  output$strategy14<-renderText({
     df_acc<-as.data.frame(Iteration1[[4]])
     count_acc<-sum(df_acc$need[1:n_bin_actions])
     paste("The number of needed Actions is",count_acc ) })
@@ -309,6 +325,14 @@ output$Iteration1graph<-renderPlot({
 output$Add1<-renderUI({actionButton("Add1", "Add selected Interventions to the strategy")})
 
 })
+
+
+
+
+
+
+
+
 
 
     
