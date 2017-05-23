@@ -18,23 +18,26 @@ library(dplyr)
 library(tidyr)
 
 setwd("~/git/AINIZE/Master/APP")
-EXCEL<-'data/DATA2_v2.xlsx'
-#EXCEL<-'data/cat_test2.xlsx'
+#EXCEL<-'data/DATA2_v2.xlsx'
+EXCEL<-'data/marc_23052017.xlsx'
+excel<-EXCEL
+
+
 
 source("library/LibraryforRankingAnalysis.R")
 source("library/LibraryforIterativeTool.R")
 #Number of Blocks
-n_blocks=4#3#4
+n_blocks=7#4#3#4
 
 #Number of Total Interventions
-n_totalint=54#85 #54
+n_totalint=85 #54#85 #54
 
 #Number of respondants for each block
-n_resp=c(3,4,3,3)#c(2,2,2) #c(3,4,3,3)
+n_resp=c(3,4,3,3,3,3,4)#c(3,4,3,3)#c(2,2,2) #c(3,4,3,3)
 
 #Number of Interventions in each block
-n_int=as.numeric(unlist(strsplit(as.character('19/14/11/10'),"/")))
-#n_int=as.numeric(unlist(strsplit(as.character('55/12/18'),"/")))
+#n_int=as.numeric(unlist(strsplit(as.character('19/14/11/10'),"/")))
+n_int=as.numeric(unlist(strsplit(as.character('11/11/15/12/15/12/9'),"/")))
 #Number of actions
 n_bin_actions<-57
 
@@ -50,11 +53,22 @@ PM[,c("encoding")]<-NULL
 criandstr<-FinalWeights(EXCEL,n_bin_actions,n_cri_resp)
 
 
-###3.compute results
-FinalInterventionsResults<-data.frame(Interventions=vector(),Average_Outcomes=vector(),Average_Complexity=vector())
-strategy<-list()
+####################################
+##########COMPUTE RESULTS###########
+###################################
 
+#Generate the criteria and actions vector
+criandstr<-FinalWeights(EXCEL,n_bin_actions,n_cri_resp)
+
+
+#Define strategy data frame to populate later
+FinalInterventionsResults<-data.frame(Block=vector(),Description=vector(),Code=vector(),Average_Outcomes=vector(),Average_Complexity=vector())
+strategy<-list()
+blocknames<-vector()
+
+#Generate each block results
 for (i in 1:n_blocks){#Loop throught the blocks
+  blocknames[i]<-PM[7,"Code"]
   for (j in 1:n_resp[i]){#Loop through the respondents
     print(paste("Computing responses for respondat",j, "in block",i))
     #Define the starting and ending rows
@@ -71,22 +85,29 @@ for (i in 1:n_blocks){#Loop throught the blocks
     
     #strategy dataframe
     print(paste("Generating strategy dataset...",j, "in block",i))
-    if (j==1) {strategy[[i]]<-data.frame(results[,c(1,2,3,6)])}#If it is the first respondant it will get the names
-    else{strategy[[i]]<-cbind(strategy[[i]],results[,c(3,6)])}
+    if (j==1) {strategy[[i]]<-data.frame(results[,c(1,2,3,4,7)])}#If it is the first respondant it will get the names
+    else{strategy[[i]]<-cbind(strategy[[i]],results[,c(4,7)])}
   }
   print(paste("Generating averages",j, "in block",i))
   strategy[[i]]$Average_Outcomes<-round(rowMeans(strategy[[i]][which(colnames(strategy[[i]])=="OutcomesMark")]),2)
   strategy[[i]]$Average_Complexity<-round(rowMeans(strategy[[i]][which(colnames(strategy[[i]])=="ComplexityMark")]),2)
   
   
-  
   #Generate a table showing the final results for each intervention
   print(paste("Generating FinalInterventions dataframe...",j, "in block",i))
   FinalInterventionsResults<-rbind(FinalInterventionsResults,
-                                   data.frame(Internventions=strategy[[i]]$Interventions,
+                                   data.frame(Block=strategy[[i]]$Block,
+                                              Descrition=strategy[[i]]$Description,
+                                              Code=strategy[[i]]$Code,
                                               Outcomes=strategy[[i]]$Average_Outcomes,
                                               Complexity=strategy[[i]]$Average_Complexity))
 }
+
+
+
+
+
+######ITERATIVE TEST####
 
 weights<-criandstr
 i=1
@@ -94,7 +115,7 @@ j=1
 start<-7+(1+n_int[i])*(j-1) #Int start in row 7 in the template+the number of interventions and two extra rows for each new respondant
 end<-7+(1+n_int[i])*(j-1)+n_int[i]-1 #sum the number of interventions to now where to end
 #Sheet
-sheet<-as.character(paste0("IC",1))
+sheet<-i
 rowindex=start:end
 PERM<-read.xlsx(EXCEL,sheet,
                 rowIndex =c(5,rowindex), 

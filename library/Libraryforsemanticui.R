@@ -1,4 +1,17 @@
 
+css <- "
+#examples > div > .header {
+margin-top: 1em;
+}"
+
+jsCode <- "
+$('.accordion').accordion({selector: {trigger: '.title .icon'}}).accordion('close');
+$('.ui.dropdown').dropdown({});
+$('.rating').rating('setting', 'clearable', true);
+"
+
+
+
 ####################################
 ##########ANALYSIS################
 ##################################
@@ -46,24 +59,24 @@ datasettings <- function() {
           div(class = "column", 
               numericInput('n_totalint', 
                            "Number of Total Interventions",
-                           value=37, min = NA, max = NA, step = NA,
+                           value=85, min = NA, max = NA, step = NA,
                            width = NULL)), 
           div(class = "column", 
               numericInput('n_blocks', 
                            "Number of Blocks", 
-                           value=3, min = NA, max = NA, step = NA,
+                           value=7, min = NA, max = NA, step = NA,
                            width = NULL)) 
       ),
       div(class = "ui stackable two column grid", 
           div(class = "column", 
               textInput('n_int', 
                         "Number of Interventions in each block  (write them separate by /,i.e.,if 3 blocks 19/10/15)",
-                        value='11/11/15', 
+                        value='11/11/15/12/15/12/9', 
                         width = NULL)), 
           div(class = "column", 
               textInput('n_resp', 
                         "Number of Respondants in each block  (write them separate by /,i.e.,if 3 blocks 3/5/3)",
-                        value='2/4/3',
+                        value='3/4/3/3/3/3/4',
                         width = NULL)) 
       ),
       
@@ -158,70 +171,57 @@ sidebar2 <- function() {
 }
 
 
-accordion <- function() {
-  div(
-    h1(class="ui header", id="accordion", "Accordion"),
-    demo(div(class="ui styled accordion",
-             div(class="active title", uiicon('dropdown icon'), "What is dog?"),
-             div(class="active content", p("A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.")),
-             div(class="title", uiicon('dropdown icon'), "What kinds of dogs are there?"),
-             div(class="content", p("There are many breeds of dogs. Each breed varies in size and temperament. Owners often select a breed of dog that they find to be compatible with their own lifestyle and desires from a companion."))
-    )
-    )
-  )
-}
 
-Iteration<-function(number){
+Iteration<-function(n){
   #TITLE
   div(class = "ui raised segment",
       h1(class="ui icon header",
          id="Iteration",
          uiicon("Doctor"),
-         div(class="content", paste0("Iteration",number)),
+         div(class="content", paste0("Iteration",n)),
          
          #Show summary
          div(class = "ui horizontal divider","Summary"),
          div(class = "ui stackable two column grid",
              div(class = "column",
-                 div(style='font-size: 75%;',textOutput(outputId =paste0("strategy",number,"1") )),
-                 div(style='font-size: 75%;',textOutput(outputId =paste0("strategy",number,"3") ))
+                 div(style='font-size: 75%;',textOutput(outputId =paste0("strategy",n,"1") )),
+                 div(style='font-size: 75%;',textOutput(outputId =paste0("strategy",n,"3") ))
                  ),
              div(class = "column",
-                 #h2(class='ui header',id=paste0("graph", number),"Graph"),
-                 div(style='font-size: 75%;',textOutput(outputId =paste0("strategy",number,"2") )),
-                 div(style='font-size: 75%;',textOutput(outputId =paste0("strategy",number,"4") ))
+                 #h2(class='ui header',id=paste0("graph", n),"Graph"),
+                 div(style='font-size: 75%;',textOutput(outputId =paste0("strategy",n,"2") )),
+                 div(style='font-size: 75%;',textOutput(outputId =paste0("strategy",n,"4") ))
              ))
          ),
-       #Accordion?
-        
-      # div(class="ui styled accordion",
-      #     div(class="title", uiicon('dropdown icon'), "Show Included Interventions and Actions"),
-      #     div(class="content",p(dataTableOutput(outputId=paste0("Iteration",number,"Interventions"))
-      #         ))
-      #     
-      # ),
-         
+      
+
+    
+      #Included Interventions and actions
+      div(class = "ui horizontal divider","Interventions and Actions in the Strategy"),
+      div(class = "ui stackable two column grid", 
+          div(class = "column", 
+              h2(class='ui header',id=paste0("inerventionsins",n),"Interventions"),
+              div(style = 'overflow-x: scroll;font-size: 75%; width: 100%',dataTableOutput(outputId =paste0("Iteration",n,"Interventions") ))), 
+          div(class = "column", 
+              h2(class='ui header',id=paste0("actionsins", n),"Actions"),
+              div(style = 'overflow-x: scroll;font-size: 75%; width: 100%',dataTableOutput(outputId =paste0("Iteration",n,"Actions") ))
+          )),
+          
+  
          
          #Show table and graph
          div(class = "ui horizontal divider","Possible Interventions To Add"),
       div(class = "ui stackable two column grid", 
           div(class = "column", 
-              h2(class='ui header',id=paste0("inerventions",number),"Interventions"),
-              div(style = 'overflow-x: scroll;font-size: 75%; width: 100%',dataTableOutput(outputId =paste0("Iteration",number,"table") ))), 
+              #h2(class='ui header',id=paste0("inerventions",n),"Interventions"),
+              div(style = 'overflow-x: scroll;font-size: 75%; width: 100%',DT::dataTableOutput(outputId =paste0("Iteration",n,"table") ))), 
           div(class = "column", 
-              h2(class='ui header',id=paste0("graph", number),"Graph"),
-              plotOutput(paste0("Iteration",number,"graph")) 
-      ),
+              #h2(class='ui header',id=paste0("graph", n),"Graph"),
+              plotOutput(paste0("Iteration",n,"graph")) 
+      )),
       
-      uiOutput(paste0("Add",number))
-      )
+      actionButton(paste0("Add",n), "Add interventions to the strategy")
+      #uiOutput(paste0("Add",n))
+      
   )
 }
-
-
-
-css <- "
-#examples > div > .header {
-margin-top: 1em;
-}"
-

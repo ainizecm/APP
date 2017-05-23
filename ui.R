@@ -5,7 +5,6 @@ navbarPage("MY APPLICATION TITLE",
            #theme = shinytheme("cerulea"), 
            
            #Define the panels
-           
            tabPanel("Model Description")
            ,
            
@@ -40,16 +39,18 @@ navbarPage("MY APPLICATION TITLE",
                       div(style="margin-left: 210px",
                           div(id="Iterations", class="ui container",
                               Iteration(0),
-                              conditionalPanel(condition='input.Add0== 1',Iteration(1)) 
+                              conditionalPanel(condition='input.Add0== 1',Iteration(1)),
+                              conditionalPanel(condition='input.Add1== 1',Iteration(2))
+                              
                               
                           )
                       )
                     )
+           
+           
+           
+           
            ),
-           
-           
-           
-           
            
            
            
@@ -59,5 +60,6 @@ navbarPage("MY APPLICATION TITLE",
                                )
                       )
            )
+           
 ) 
 

@@ -3,8 +3,9 @@ title: Test_app
 account: acm1292
 server: shinyapps.io
 appId: 181339
-bundleId: 830846
+bundleId: 832084
 url: https://acm1292.shinyapps.io/test_app/
-when: 1495029011.02841
+when: 1495101793.6075
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: .RData|README.md|testing.R|ui_old.R|data/.DS_Store|data/.Rapp.history|data/cat_test2.xlsx|data/DATA2_v2.xlsx|library/.DS_Store|supportexamples/exampleforui.R

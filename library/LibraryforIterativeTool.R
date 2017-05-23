@@ -41,7 +41,7 @@ needed_actions_complexity<-function(x=rep(0,n_totalint),y=rep(0,n_bin_actions),w
 
   numb=sapply(column_sum[1:n_bin_actions],function(x) round(x,0))
   df_needed_actios<-data.frame(Code=colnames(PM[,14:(14+n_bin_actions+1)]),
-                               need=column_sum_normalized,
+             need=column_sum_normalized,
                                weight=t(accwe),
                                Int=c(numb,column_sum_normalized[c(n_bin_actions+1,n_bin_actions+2)]))
   return(df_needed_actios)
@@ -157,7 +157,7 @@ strategy<-function(x=rep(0,n_totalint),y=rep(0,n_bin_actions),PM,outmark,weights
     
   return(list(outcomespercen=outpercen*100,
               complepercen=complepercen*100,
-              Int=data.frame(PM$Code,choose=x),
+              Int=data.frame(PM$Code,PM$Description,choose=x),
               df_actions=df_actions,
               extra_interventions=extra_interventions))
 }
