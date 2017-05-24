@@ -129,8 +129,8 @@ ActionsOutput<-function(){
       
       #Ranking by block
       h2(class='ui header',id="Actions Ranking","Actions Ranking"),
-      div(style = 'overflow-x: scroll',dataTableOutput(outputId = "ActionsRanking"))
-      
+      div(style = 'overflow-x: scroll',dataTableOutput(outputId = "ActionsRanking")),
+      div(downloadButton(outputId="downloadData2",'Download'))
       #Maybe actions nice show in each block?
   )
 }
@@ -201,11 +201,12 @@ Iteration<-function(n){
       div(class = "ui stackable two column grid", 
           div(class = "column", 
               h2(class='ui header',id=paste0("inerventionsins",n),"Interventions"),
-              div(style = 'overflow-x: scroll;font-size: 75%; width: 100%',dataTableOutput(outputId =paste0("Iteration",n,"Interventions") ))), 
+              div(style = 'overflow-x: scroll;font-size: 75%; width: 100%',dataTableOutput(outputId =paste0("Iteration",n,"Interventions") )),
+          div(downloadButton(outputId=paste0("Download",n,"Interventions"),'Download'))),
           div(class = "column", 
               h2(class='ui header',id=paste0("actionsins", n),"Actions"),
-              div(style = 'overflow-x: scroll;font-size: 75%; width: 100%',dataTableOutput(outputId =paste0("Iteration",n,"Actions") ))
-          )),
+              div(style = 'overflow-x: scroll;font-size: 75%; width: 100%',dataTableOutput(outputId =paste0("Iteration",n,"Actions") )),
+              div(downloadButton(outputId=paste0("Download",n,"Actions"),'Download')))),
           
   
          
@@ -214,10 +215,12 @@ Iteration<-function(n){
       div(class = "ui stackable two column grid", 
           div(class = "column", 
               #h2(class='ui header',id=paste0("inerventions",n),"Interventions"),
-              div(style = 'overflow-x: scroll;font-size: 75%; width: 100%',DT::dataTableOutput(outputId =paste0("Iteration",n,"table") ))), 
+              div(style = 'overflow-x: scroll;font-size: 75%; width: 100%',DT::dataTableOutput(outputId =paste0("Iteration",n,"table") )),
+              div(downloadButton(outputId=paste0("Download",n,"Table"),'Download'))), 
           div(class = "column", 
               #h2(class='ui header',id=paste0("graph", n),"Graph"),
-              plotOutput(paste0("Iteration",n,"graph")) 
+              plotOutput(paste0("Iteration",n,"graph")),
+              downloadButton(outputId=paste0("Download",n,"graph"),'Download')
       )),
       
       actionButton(paste0("Add",n), "Add interventions to the strategy")

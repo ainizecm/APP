@@ -1,0 +1,86 @@
+"","Block","Descrition","Code","Outcomes","Complexity"
+"1","A1","Definir criterios objetivos para identificar personas con mayor riesgo de presentación de efectos adversos","AA1",0.69,0.13
+"2","A1","Monitorización de efectos adversos de pacientes crónicos en tratamiento, día 10, 30 y 60","AA2",0.57,0.05
+"3","A1","Monitorización de efectos adversos de pacientes crónicos en tratamiento a día 15, 30, 45 y 60","AA3",0.5,0.05
+"4","A1","Seguimiento de los efectos adversos de pacientes crónicos en tratamiento los días 15 y 60 para sustiuir las visitas presenciales por llamadas por teléfono","AA4",0.33,0.05
+"5","A1","Realizar analíticas de sangre cada 15 días para controlar los efectos adversos","AA5",0.49,0.08
+"6","A1","Realizar analíticas de sangre cuando el paciente reporte alguna sintomatología","AA6",0.38,0.04
+"7","A1","Usar eHealth para monitorizar efectos adversos","AA7",0.47,0.15
+"8","A1","Atención telefónica/whatsapp para identificación rápida de efectos adversos","AA8",0.52,0.22
+"9","A1","Reportar la identificación de efectos adversos (moderados y severos) para mejorar la farmacovigilancia","AA9",0.53,0.05
+"10","A1","Esquemas diferenciales de seguimiento de los efectos adversos según el riesgo de los pacientes a padecerlos","AA10",0.58,0.08
+"11","A1","Asegurar la suspensión de tratamiento en casos indicados","AA11",0.51,0.04
+"12","A2","Seguimiento clínico anual post-tratamiento hasta negativización o 5 años en casos agudos o congénitos y de por vida en pacientes crónicos","AF1",0.55,0.25
+"13","A2","Seguimiento clínico anual con electrocardiograma con todos los pacientes crónicos","AF2",0.73,0.13
+"14","A2","Seguimiento serológico cada 3/5 años","AF3",0.45,0.13
+"15","A2","Seguimiento serológico cada 10 años","AF4",0.52,0.15
+"16","A2","Seguimiento mediante PCR del paciente crónico","AF5",0.5,0.24
+"17","A2","Seguimiento mediante marcadores protrombóticos","AF6",0.5,0.15
+"18","A2","Seguimiento del paciente en atención primaria en coordinación con el hospital de referencia","AF7",0.36,0.14
+"19","A2","Recordatorio por whatsapp o SMS de una visita clínica antes para mejorar el seguimiento anual de los pacientes","AF8",0.45,0.1
+"20","A2","Circuitos de derivación de pacientes a centros de referencia de otros países","AF9",0.63,0.1
+"21","A2","Comunicación y coordinación entre centros de referencia para adaptarlo a las necesidades de los pacientes","AF10",0.48,0.07
+"22","A2","Seguimiento psicológico de los pacientes","AF11",0.42,0.16
+"23","A3","Seguimiento de la dieta durante el tratamiento","AT1",0.29,0.14
+"24","A3","Tarjetas de tratamiento o pastilleros para guiar al paciente en la toma de pastillas","AT2",0.48,0.18
+"25","A3","No entrada al tratamiento durante períodos festivos","AT3",0.45,0.11
+"26","A3","Adaptabilidad de las visitas durante el tratamiento (horarios flexibles, cerca de casa)","AT4",0.49,0.31
+"27","A3","Descentralización del tratamiento en atención primaria o enfermería","AT5",0.51,0.23
+"28","A3","Consejería pretratamiento: informar al paciente sobre niveles de evidencia y recomendación para recibir el tratamiento","AT6",0.34,0.1
+"29","A3","Valoración médica de casos crónicos previa al tratamiento","AT7",0.47,0.13
+"30","A3","Ofrecer tratamiento etiológio solamente a pacientes indeterminados tras valoración médica","AT8",0.4,0.15
+"31","A3","Ofrecer tratamiento etiológio solamente a pacientes cardiológicos tras valoración médica (estados iniciales de la cardiopatía)","AT9",0.43,0.1
+"32","A3","Ofrecer tratamiento etiológio solamente a pacientes digestivos tras valoración médica","AT10",0.22,0.11
+"33","A3","Mujeres en edad fértil: Descartar la posibilidad de embarazo previo al inicio del tratamiento e indicar la contracepción durante el mismo","AT11",0.38,0.14
+"34","A3","Dar anticonceptivos durante el tratamiento para evitar el embarazo","AT12",0.12,0.13
+"35","A3","Seguimiento y tratamiento no etiológico a todos los pacientes por parte de personal de salud especializado","AC1",0.47,0.11
+"36","A3","Seguimiento y tratamiento no etiológico a todos los pacientes por parte de personal de centros de atención primaria","AC2",0.31,0.04
+"37","A3","Dotación de marcapasos","AC3",0.45,0.24
+"38","B","Diagnóstico usando 2 pruebas convencionales siempre (1º y confirmación diagnóstica)","BD1",0.37,0.02
+"39","B","Diagnóstico simplificado en la red de atención primeria","BD2",0.36,0.02
+"40","B","Diagnóstico con una única prueba serológica","BD3",0.33,0.01
+"41","B","Diagnóstico mediante PCR para el Chagas congénito","BD4",0.49,0.02
+"42","B","Diagnóstico mediante PCR para los pacientes inmunosuprimidos","BD5",0.5,0.02
+"43","B","Test serológico convencional como cribado y confirmación diagnóstica solo en caso de + o duda","BD6",0.41,0.03
+"44","B","Valoración cardiovascular completa con exámenes complementarios según los síntomas","BC1",0.51,0.03
+"45","B","Valoración digestiva completa con exámenes complementarios según los síntomas","BC2",0.52,0.02
+"46","B","Detecición precoz de reactivación en pacientes inmunosuprimidos mediante PCR","BC3",0.48,0.02
+"47","B","Electrocardiograma y placa de toraz en todos los pacientes de Chagas","BC4",0.63,0.02
+"48","B","Ecocardiograma y placa de toraz en todos los pacientes de Chagas","BC5",0.33,0.04
+"49","B","Enema de bario y tránsito a todos los pacientes de Chagas","BC6",0.44,0.03
+"50","C","Cribado a embarazadas","CS1",0.52,0.02
+"51","C","Cribado a mujeres en edad fértil","CS2",0.51,0.33
+"52","C","Cribado a recién nacidos de madres seropositivas y familiares mediante pruebas parasitológicas directas","CS3",0.35,0.03
+"53","C","Cribado a menores de 18 años en riesgo","CS4",0.44,0.18
+"54","C","Cribado a adultos con riesgo de exposición","CS5",0.47,0.17
+"55","C","Cribado a familiares de casos positivos","CS6",0.45,0.15
+"56","C","Cribado de casos agudos (accidentes de laboratorio)","CS7",0.65,0.01
+"57","C","Cribado en espacios de Comunidad Latinoamericana (test rápido): Centros de barrios, centros culturales o asociaciones de vecinos)","CS8",0.56,0.24
+"58","C","Alertas en el programa informático de atención primaria y maternidad de que el paciente es latinoamericano","CS9",0.46,0.14
+"59","C","Cribado universal a personas en riesgo en los centros de atención primaria","CS10",0.6,0.23
+"60","C","Cribado en inmunodeprimidos","CS11",0.55,0.09
+"61","C","Abrir en fin de semana los centros de referencia (en rotación) para mejorar el acceso al cribado","CS12",0.59,0.24
+"62","C","Cribado de personas donantes en bancos de sangre","CB1",0.56,0.01
+"63","C","Cribado de personas donantes de células y tejidos humanos","CB2",0.5,0
+"64","C","Cribado de personas donantes de órganos","CO1",0.27,0
+"65","D1","Revisión y desarrollo de materiales didácticos de prevención","DI1",0.43,0.2
+"66","D1","Charlas informativas realizadas a la comunidad","DI2",0.57,0.19
+"67","D1","Creación de grupos de autoayuda (pacientes, familia, vecinos)","DI3",0.31,0.11
+"68","D1","Actividades de IEC centradas en personas de riesgo","DI4",0.33,0.16
+"69","D1","Información en puntos de encuentro clave (consulados, iglesias) informando de los programas existentes","DI5",0.25,0.07
+"70","D1","Desarrollar una página web más fiable y actualizada","DI6",0.32,0.09
+"71","D1","Campañas de información a mujeres en edad fértil","DI7",0.48,0.06
+"72","D1","Educación de líderes comunitarios","DI8",0.27,0.07
+"73","D1","Paciente experto y otros programas de acompañamiento","DI9",0.4,0.09
+"74","D1","Circuito de derivación entre las charlas de IEC y los centros de salud","DI10",0.25,0.08
+"75","D1","Grupos focales con pacientes para mejorar la calidad del servicio y adaptarla a las demandas","DI11",0.44,0.1
+"76","D1","Foro de comunicación entre pacientes (anónimo o no)","DI12",0.28,0.09
+"77","D2","Seguimiento de Recién Nacido de madres seropositivas","DV1",0.5,0.05
+"78","D2","Seguimiento de mujeres embarazadas con la serología positiva","DV2",0.58,0.06
+"79","D2","Sistema de alerta de mujeres embarazadas con serología + que mejore la vigilancia","DV3",0.54,0.14
+"80","D2","Enfermedad de Chagas de declaración obligatoria en mujeres embarazadas","DV4",0.4,0.08
+"81","D2","Reporte anual de todos los casos de vigilancia de Chagas (bb, ot, cs)","DV5",0.29,0.13
+"82","D2","Red de vigilancia de casos detectados y tratados a nivel catalán","DV6",0.57,0.14
+"83","D2","Sesiones informativas en los Bancos de Sangre sobre el Chagas a personas en riesgo","DB1",0.48,0.04
+"84","D2","Circuito de referencias entre BB y centros de salud","DB2",0.66,0.1
+"85","D2","Seguimiento del receptor de de órganos mediante PCR","DO1",0.48,0.03

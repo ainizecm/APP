@@ -8,22 +8,17 @@ function(input, output, session) {
   if (is.null(file)) 
     return(NULL)
   
-  ###################################
-  ##########READ PERFORMANCE MATRIX###
-  ####################################
+    ###################################
+    ##########READ PERFORMANCE MATRIX###
+    ####################################
   
   EXCEL<-file$datapath
 
-  #Performance Matrix 
   PM<-read.xlsx2(EXCEL,"PerformanceMatrix" ,startRow=5,encoding='UTF-8',header=TRUE)
   PM[,c("encoding")]<-NULL
   PM[,c(4:ncol(PM))]<-apply(PM[,c(4:ncol(PM))],c(1,2),as.numeric)
   output$PM<-renderDataTable({PM})
   #print(PM)
-
-
-     
-
      
      
   #If the compute bottom is clicked...
@@ -147,25 +142,40 @@ function(input, output, session) {
                      Outcomes=strategy[[i]]$Average_Outcomes,
                      Complexity=strategy[[i]]$Average_Complexity),
                     class = 'white-space: nowrap'
-      )}))
+      )}
+      
+      ))
       ,column(6,renderPlot({grafico(strategy[[i]])}))
          ),
       fluidRow(div(style="color:white", renderText("  jkkjh "))),
-      fluidRow(div(style="color:white", renderText("  jkkjh "))))})
+      fluidRow(div(style="color:white", renderText("  jkkjh "))))
+      })
     do.call(tagList, strategy_list)
     })
 
 
   
   #Show the ranking for actions
+  Comp<-AccCompl(EXCEL,n_bin_actions,n_cri_resp)
+  Actions<-data.frame(Code=Comp$Code,Description=Comp$Spanish)
+  Actions$Interventions<-colSums(PM[,c(14:(13+n_bin_actions))])
+  Actions$Complexity<-Comp$FINAL
+  rownames(Actions)<-NULL
   output$ActionsRanking<-renderDataTable({
-    Comp<-AccCompl(EXCEL,n_bin_actions,n_cri_resp)
-    Actions<-data.frame(Code=Comp$Code,Description=Comp$Spanish)
-    Actions$Interventions<-colSums(PM[,c(14:(13+n_bin_actions))])
-    Actions$Complexity<-Comp$FINAL
-    rownames(Actions)<-NULL
+    # Comp<-AccCompl(EXCEL,n_bin_actions,n_cri_resp)
+    # Actions<-data.frame(Code=Comp$Code,Description=Comp$Spanish)
+    # Actions$Interventions<-colSums(PM[,c(14:(13+n_bin_actions))])
+    # Actions$Complexity<-Comp$FINAL
+    # rownames(Actions)<-NULL
     Actions
   },caption="Actions")
+  
+  output$downloadData2 <- downloadHandler(
+    filename = function() { paste('Actions', '.csv', sep='') },
+    content = function(file) {
+      write.csv(Actions, file)
+    }
+  )
   
   ##Details by respondant if you want to check some results
   #Show results for each respondant  
@@ -173,6 +183,7 @@ function(input, output, session) {
     strategy_list<-lapply(1:n_blocks,function(i){renderDataTable({strategy[[i]]},caption=paste0('Block',i))})
     do.call(tagList, strategy_list)
   })
+  
   
   output$ActionsSurvey<-renderDataTable({
     Comp<-AccCompl(EXCEL,n_bin_actions=57,n_cri_resp=4)
@@ -191,107 +202,81 @@ function(input, output, session) {
   ##########ITERATIVE TOOL###########
   ###################################
  
+
+  ###Iteration0####
+number<-0
+  x<-rep(0,n_totalint)
+  y<-rep(0,n_bin_actions)
+   
+    It<-strategy(x,y
+                 ,PM
+                 ,FinalInterventionsResults$Outcomes
+                 ,criandstr$weights
+                 ,n_bin_actions
+                 ,n_totalint)
     
-####################################
-##########ITERATIOn 0###########
-###################################
-#Inizialize and empty strategy
+    #SHOW SUMMARY OF STRATEGY
+    output[[paste0("strategy",number,"1")]]<-renderText({paste("The percentage of Outcomes reached by the strategy is",round(It[[1]],2),"%" ) })
+    output[[paste0("strategy",number,"2")]]<-renderText({paste("The percentage of Complexity reached by the strategy is",round(It[[2]],2),"%" ) })
+    output[[paste0("strategy",number,"3")]]<-renderText({
+      int<-as.data.frame(It[[3]])
+      count_int<-sum(int$choose)
+      paste("The number of selected Interventions is",count_int ) })
+    output[[paste0("strategy",number,"4")]]<-renderText({
+      df_acc<-as.data.frame(It[[4]])
+      count_acc<-sum(df_acc$need[1:n_bin_actions])
+      paste("The number of needed Actions is",count_acc ) })
+    
+    output[[paste0("Iteration",number,"Interventions")]]<-renderDataTable({It[[3]][which(It[[3]]$choose==1),c(1,2)]})
+    output[[paste0("Iteration",number,"Actions")]]<-renderDataTable({
+      ac<-data.frame(
+        Actnames$Action
+        , It[[4]])
+      rownames(ac)<-NULL
+      ac[which(ac$need>0),]
+      
+    })
+    
+    
+    #SHOW INTERVENTIONS TO ADD 
+    
+    #OutputTable 
+    output[[paste0("Iteration",number,"table")]]<-renderDataTable({
+      datatable(as.data.frame(It[[5]]),filter = 'top',class = 'white-space: nowrap')
+    })
+    s11<-input[[paste0("Iteration",number,"table_rows_all")]] #Shows rows after being filtered
+    s12<-input[[paste0("Iteration",number,"table_rows_selected")]]
+    
+    #OutputGraph 
+    output[[paste0("Iteration",number,"graph")]]<-renderPlot({
+      ExtraInt<-It[[5]]
+      s11<-input[[paste0("Iteration",number,"table_rows_all")]]
+      ExtraInt<-ExtraInt[s11,]
+      inp<-ExtraInt$Compl
+      outp<-ExtraInt$Out
+      dea.plot.frontier(inp,outp,txt=ExtraInt$Code,xlab="Added % Complexity",ylab="Added % Outcomes"
+                        ,pch=ifelse(outp>median(outp)&inp<median(inp), 19, 1))
+      
+      axis(1,labels=FALSE,tick=T,line=F,pos=median(outp),lwd.ticks=0)
+      axis(2,labels=FALSE,tick=T,line=F,pos=median(inp),lwd.ticks=0)
+    })
+    
 
-
- x<-rep(0,n_totalint)
- y<-rep(0,n_bin_actions)
-
- 
- 
-#Run strategy for first situation
-Iteration0<-strategy(x,y
-         ,PM
-         ,FinalInterventionsResults$Outcomes
-         ,criandstr$weights
-         ,n_bin_actions
-         ,n_totalint)
-
-#SHOW SUMMARY OF STRATEGY
-output$strategy01<-renderText({paste("The percentage of Outcomes reached by the strategy is",Iteration0[[1]] ) })
-output$strategy02<-renderText({paste("The percentage of Complexity reached by the strategy is",Iteration0[[2]] ) })
-output$strategy03<-renderText({
-  int<-as.data.frame(Iteration0[[3]])
-  count_int<-sum(int$choose)
-  paste("The number of selected Interventions is",count_int ) })
-output$strategy04<-renderText({
-  df_acc<-as.data.frame(Iteration0[[4]])
-  count_acc<-sum(df_acc$need[1:n_bin_actions])
-  paste("The number of needed Actions is",count_acc ) })
-
-output$Iteration0Interventions<-renderDataTable({Iteration0[[3]][which(Iteration0[[3]]$choose==1),]})
-output$Iteration0Actions<-renderDataTable({Iteration0[[4]][which(Iteration0[[4]]$need==1),]})
-
-
-
-
-
-
-#OutputTable in Iteration 0
-output$Iteration0table<-renderDataTable({
-  datatable(
-    Iteration0[[5]]
-  ,filter = 'top',class = 'white-space: nowrap')
-})
-
-#Read what happens on the table
-s1<-input$Iteration0table_rows_all #Shows rows after being filtered
-s2<-input$Iteration0table_rows_selected
-
-# output$testfilter<-renderDataTable({ExtraInt<-Iteration0[[5]]
-# s1<-input$Iteration0table_rows_all
-# inp<-ExtraInt[s1,]$Compl
-# as.data.frame(inp)})
-
-
-#OutputGraph in Iteration 0
-output$Iteration0graph<-renderPlot({
-  ExtraInt<-Iteration0[[5]]
-  s1<-input$Iteration0table_rows_all
-  ExtraInt<-ExtraInt[s1,]
-  inp<-ExtraInt$Compl
-  outp<-ExtraInt$Out
-  #eff<-dea(inp,outp)
-  #DEA<-data.frame(eff=eff$eff)
-  dea.plot.frontier(inp,outp,txt=ExtraInt$Code,xlab="Added % Complexity",ylab="Added % Outcomes"
-  ,pch=ifelse(outp>median(outp)&inp<median(inp), 19, 1))
-  
-  axis(1,labels=FALSE,tick=T,line=F,pos=median(outp),lwd.ticks=0)
-  axis(2,labels=FALSE,tick=T,line=F,pos=median(inp),lwd.ticks=0)
-  
- #if (length(s2)) points(ExtraInt[s2,], pch = 19, cex = 2)
-})
-
-#output$Add0<-renderUI({actionButton("Add0", "Add selected Interventions to the strategy")})
-#Make an buttom to finish the strategy
-#and observe Event to show the final strategy in a nice graph(build the graph)
-
-
-
-####################################
-##########ITERATIONS###########
-###################################
-
-
-
+    ############################ITERATION 1####################################  
 observeEvent(input[[paste0("Add",0)]],{
   number<-1
-  ###Iteration1####
   prev<-number-1            
   s2<-input[[paste0("Iteration",prev,"table_rows_selected")]]
   x[s2]<-1
   #y is the needed vector from the previous iteration
-  y[which(Iteration0[[4]]$need==1)]<-1
+  #y[which(Iteration0[[4]]$need==1)]<-1
   It<-strategy(x,y
                ,PM
                ,FinalInterventionsResults$Outcomes
                ,criandstr$weights
                ,n_bin_actions
                ,n_totalint)
+  
   
   #SHOW SUMMARY OF STRATEGY
   output[[paste0("strategy",number,"1")]]<-renderText({paste("The percentage of Outcomes reached by the strategy is",round(It[[1]],2),"%" ) })
@@ -304,24 +289,44 @@ observeEvent(input[[paste0("Add",0)]],{
     df_acc<-as.data.frame(It[[4]])
     count_acc<-sum(df_acc$need[1:n_bin_actions])
     paste("The number of needed Actions is",count_acc ) })
+
+  #ITERATIONS AND ACTIONS IN THE STRATEGY
+  iterations<-It[[3]][which(It[[3]]$choose==1),c(1,2)]
+  output[[paste0("Iteration",number,"Interventions")]]<-renderDataTable({iterations
+    })
+  output[[paste0('Download',number,'Interventions')]] <- downloadHandler(
+    filename = function() { paste('Iteration',number,'Interventions', '.csv', sep='') },
+    content = function(file) {
+      write.csv(It[[3]][which(It[[3]]$choose==1),c(1,2)], file)
+    }
+  )
   
-  output[[paste0("Iteration",number,"Interventions")]]<-renderDataTable({It[[3]][which(It[[3]]$choose==1),c(1,2)]})
+  ac<-data.frame(Actnames$Action, It[[4]])
+  ac<-ac[which(ac$need>0),]
   output[[paste0("Iteration",number,"Actions")]]<-renderDataTable({
-    ac<-data.frame(
-      Actnames$Action
-      , It[[4]])
-    rownames(ac)<-NULL
-    ac[which(ac$need>0),]
-    
+    ac
   })
-  
+  output[[paste0('Download',number,'Actions')]] <- downloadHandler(
+    filename = function() { paste('Iteration',number,'Actions', '.csv', sep='') },
+    content = function(file) {
+      write.csv(ac, file)
+    }
+  )
   
   #SHOW INTERVENTIONS TO ADD 
   
   #OutputTable in Iteration 1
   output[[paste0("Iteration",number,"table")]]<-renderDataTable({It[[5]]})
+  output[[paste0('Download',number,'table')]] <- downloadHandler(
+    filename = function() { paste('Iteration',number,'table', '.csv', sep='') },
+    content = function(file) {
+      write.csv(It[[5]], file)
+    }
+  )
   s11<-input[[paste0("Iteration",number,"table_rows_all")]] #Shows rows after being filtered
   s12<-input[[paste0("Iteration",number,"table_rows_selected")]]
+  
+
   
   #OutputGraph in Iteration 1
   output[[paste0("Iteration",number,"graph")]]<-renderPlot({
@@ -338,28 +343,44 @@ observeEvent(input[[paste0("Add",0)]],{
     
   })
   
+  output[[paste0('Download',number,'graph')]] <- downloadHandler(
+    filename =  function() {
+      paste0('Download',number,'graph.png')
+    },
+    # content is a function with argument file. content writes the plot to the device
+    content = function(file) {
+        png(file) 
+      ExtraInt<-It[[5]]
+      s11<-isolate(input[[paste0("Iteration",number,"table_rows_all")]])
+      ExtraInt<-ExtraInt[s11,]
+      inp<-ExtraInt$Compl
+      outp<-ExtraInt$Out
+      dea.plot.frontier(inp,outp,txt=ExtraInt$Code,xlab="Added % Complexity",ylab="Added % Outcomes"
+                        ,pch=ifelse(outp>median(outp)&inp<median(inp), 19, 1))
+      
+      axis(1,labels=FALSE,tick=T,line=F,pos=median(outp),lwd.ticks=0)
+      axis(2,labels=FALSE,tick=T,line=F,pos=median(inp),lwd.ticks=0)
+      dev.off()  # turn the device off
+      
+    } 
+  )
   
-  #Iteration2##############
+  ############################ITERATION 2####################################
     observeEvent(input[[paste0("Add",1)]],{
       number<-2
       
-      prev<-number-1 
-      
-      ind<-rownames(It[[5]])
-      print(ind)
-      position<-input[[paste0("Iteration",prev,"table_rows_selected")]]
-      print(position)
-      s2<-as.numeric(ind[position])
-      print(s2)
+      prev<-number-1            
+      s2<-input[[paste0("Iteration",prev,"table_rows_selected")]]
       x[s2]<-1
-      print(x)
-      y[which(It[[4]]$need==1)]<-1
+      #y is the needed vector from the previous iteration
+      #y[which(Iteration0[[4]]$need==1)]<-1
       It<-strategy(x,y
                    ,PM
                    ,FinalInterventionsResults$Outcomes
                    ,criandstr$weights
                    ,n_bin_actions
                    ,n_totalint)
+      
       
       #SHOW SUMMARY OF STRATEGY
       output[[paste0("strategy",number,"1")]]<-renderText({paste("The percentage of Outcomes reached by the strategy is",round(It[[1]],2),"%" ) })
@@ -373,86 +394,48 @@ observeEvent(input[[paste0("Add",0)]],{
         count_acc<-sum(df_acc$need[1:n_bin_actions])
         paste("The number of needed Actions is",count_acc ) })
       
-      output[[paste0("Iteration",number,"Interventions")]]<-renderDataTable({It[[3]][which(It[[3]]$choose==1),c(1,2)]})
+      #ITERATIONS AND ACTIONS IN THE STRATEGY
+      iterations<-It[[3]][which(It[[3]]$choose==1),c(1,2)]
+      output[[paste0("Iteration",number,"Interventions")]]<-renderDataTable({iterations
+      })
+      output[[paste0('Download',number,'Interventions')]] <- downloadHandler(
+        filename = function() { paste('Iteration',number,'Interventions', '.csv', sep='') },
+        content = function(file) {
+          write.csv(It[[3]][which(It[[3]]$choose==1),c(1,2)], file)
+        }
+      )
+      
+      ac<-data.frame(Actnames$Action, It[[4]])
+      ac<-ac[which(ac$need>0),]
       output[[paste0("Iteration",number,"Actions")]]<-renderDataTable({
-        ac<-data.frame(
-          Actnames$Action
-          , It[[4]])
-        rownames(ac)<-NULL
-        ac[which(ac$need>0),]
-        
+        ac
       })
-      
+      output[[paste0('Download',number,'Actions')]] <- downloadHandler(
+        filename = function() { paste('Iteration',number,'Actions', '.csv', sep='') },
+        content = function(file) {
+          write.csv(ac, file)
+        }
+      )
       
       #SHOW INTERVENTIONS TO ADD 
       
       #OutputTable in Iteration 1
-      output[[paste0("Iteration",number,"table")]]<-renderDataTable({
-        datatable(as.data.frame(It[[5]]),filter = 'top',class = 'white-space: nowrap')
-      })
+      output[[paste0("Iteration",number,"table")]]<-renderDataTable({It[[5]]})
+      output[[paste0('Download',number,'table')]] <- downloadHandler(
+        filename = function() { paste('Iteration',number,'table', '.csv', sep='') },
+        content = function(file) {
+          write.csv(It[[5]], file)
+        }
+      )
       s11<-input[[paste0("Iteration",number,"table_rows_all")]] #Shows rows after being filtered
       s12<-input[[paste0("Iteration",number,"table_rows_selected")]]
+      
+      
       
       #OutputGraph in Iteration 1
       output[[paste0("Iteration",number,"graph")]]<-renderPlot({
         ExtraInt<-It[[5]]
-        s11<-input[[paste0("Iteration",number,"table_rows_all")]]
-        ExtraInt<-ExtraInt[s11,]
-        inp<-ExtraInt$Compl
-        outp<-ExtraInt$Out
-        dea.plot.frontier(inp,outp,txt=ExtraInt$Code,xlab="Added % Complexity",ylab="Added % Outcomes"
-                          ,pch=ifelse(outp>median(outp)&inp<median(inp), 19, 1))
-        
-        axis(1,labels=FALSE,tick=T,line=F,pos=median(outp),lwd.ticks=0)
-        axis(2,labels=FALSE,tick=T,line=F,pos=median(inp),lwd.ticks=0)
-      })
-      
-    })
-  #Iteration3##############
-    observeEvent(input[[paste0("Add",number-1)]],{
-      
-      prev<-number-1            
-      s2<-input[[paste0("Iteration",prev,"table_rows_selected")]]
-      x[s2]<-1
-      # y<-rep(0,n_bin_actions)
-      It<-strategy(x,y
-                   ,PM
-                   ,FinalInterventionsResults$Outcomes
-                   ,criandstr$weights
-                   ,n_bin_actions
-                   ,n_totalint)
-      
-      #SHOW SUMMARY OF STRATEGY
-      output[[paste0("strategy",number,"1")]]<-renderText({paste("The percentage of Outcomes reached by the strategy is",round(It[[1]],2),"%" ) })
-      output[[paste0("strategy",number,"2")]]<-renderText({paste("The percentage of Complexity reached by the strategy is",round(It[[2]],2),"%" ) })
-      output[[paste0("strategy",number,"3")]]<-renderText({
-        int<-as.data.frame(It[[3]][which(It[[3]]$choose==1),])
-        count_int<-sum(int$choose)
-        paste("The number of selected Interventions is",count_int ) })
-      output[[paste0("strategy",number,"4")]]<-renderText({
-        df_acc<-as.data.frame(It[[4]][which(It[[4]]$need==1),])
-        count_acc<-sum(df_acc$need[1:n_bin_actions])
-        paste("The number of needed Actions is",count_acc ) })
-      
-      output[[paste0("Iteration",number,"Interventions")]]<-renderDataTable({It[[3]]})
-      output[[paste0("Iteration",number,"Actions")]]<-renderDataTable({It[[4]]})
-      
-      
-      
-      
-      #SHOW INTERVENTIONS TO ADD 
-      
-      #OutputTable in Iteration 1
-      output[[paste0("Iteration",number,"table")]]<-renderDataTable({
-        datatable(as.data.frame(It[[5]]),filter = 'top',class = 'white-space: nowrap')
-      })
-      s11<-input[[paste0("Iteration",number,"table_rows_all")]] #Shows rows after being filtered
-      s12<-input[[paste0("Iteration",number,"table_rows_selected")]]
-      
-      #OutputGraph in Iteration 1
-      output[[paste0("Iteration",number,"graph")]]<-renderPlot({
-        ExtraInt<-It[[5]]
-        s11<-input[[paste0("Iteration",number,"table_rows_all")]]
+        s11<-isolate(input[[paste0("Iteration",number,"table_rows_all")]])
         ExtraInt<-ExtraInt[s11,]
         inp<-ExtraInt$Compl
         outp<-ExtraInt$Out
@@ -462,28 +445,147 @@ observeEvent(input[[paste0("Add",0)]],{
         axis(1,labels=FALSE,tick=T,line=F,pos=median(outp),lwd.ticks=0)
         axis(2,labels=FALSE,tick=T,line=F,pos=median(inp),lwd.ticks=0)
         
-        #if (length(s2)) points(ExtraInt[s2,], pch = 19, cex = 2)
-        
-        #output[[paste0("Add",number)]]<-renderUI({actionButton(paste0("Add",number), "Add selected Interventions to the strategy")})
-        
+      })
+      
+      output[[paste0('Download',number,'graph')]] <- downloadHandler(
+        filename =  function() {
+          paste0('Download',number,'graph.png')
+        },
+        # content is a function with argument file. content writes the plot to the device
+        content = function(file) {
+          png(file) 
+          ExtraInt<-It[[5]]
+          s11<-isolate(input[[paste0("Iteration",number,"table_rows_all")]])
+          ExtraInt<-ExtraInt[s11,]
+          inp<-ExtraInt$Compl
+          outp<-ExtraInt$Out
+          dea.plot.frontier(inp,outp,txt=ExtraInt$Code,xlab="Added % Complexity",ylab="Added % Outcomes"
+                            ,pch=ifelse(outp>median(outp)&inp<median(inp), 19, 1))
+          
+          axis(1,labels=FALSE,tick=T,line=F,pos=median(outp),lwd.ticks=0)
+          axis(2,labels=FALSE,tick=T,line=F,pos=median(inp),lwd.ticks=0)
+          dev.off()  # turn the device off
+          
+        } 
+      )
+    ############################ITERATION 3####################################
+      observeEvent(input[[paste0("Add",2)]],{
         number<-number+1
-      })
-      
-    })  
+        prev<-number-1            
+        s2<-input[[paste0("Iteration",prev,"table_rows_selected")]]
+        x[s2]<-1
+        #y is the needed vector from the previous iteration
+        #y[which(Iteration0[[4]]$need==1)]<-1
+        It<-strategy(x,y
+                     ,PM
+                     ,FinalInterventionsResults$Outcomes
+                     ,criandstr$weights
+                     ,n_bin_actions
+                     ,n_totalint)
+        print(It[[3]])
+        print(It[[4]])
+        
+        
+        #SHOW SUMMARY OF STRATEGY
+        output[[paste0("strategy",number,"1")]]<-renderText({paste("The percentage of Outcomes reached by the strategy is",round(It[[1]],2),"%" ) })
+        output[[paste0("strategy",number,"2")]]<-renderText({paste("The percentage of Complexity reached by the strategy is",round(It[[2]],2),"%" ) })
+        output[[paste0("strategy",number,"3")]]<-renderText({
+          int<-as.data.frame(It[[3]])
+          count_int<-sum(int$choose)
+          paste("The number of selected Interventions is",count_int ) })
+        output[[paste0("strategy",number,"4")]]<-renderText({
+          df_acc<-as.data.frame(It[[4]])
+          count_acc<-sum(df_acc$need[1:n_bin_actions])
+          paste("The number of needed Actions is",count_acc ) })
+        
+        #ITERATIONS AND ACTIONS IN THE STRATEGY
+        iterations<-It[[3]][which(It[[3]]$choose==1),c(1,2)]
+        output[[paste0("Iteration",number,"Interventions")]]<-renderDataTable({iterations
+        })
+        output[[paste0('Download',number,'Interventions')]] <- downloadHandler(
+          filename = function() { paste('Iteration',number,'Interventions', '.csv', sep='') },
+          content = function(file) {
+            write.csv(It[[3]][which(It[[3]]$choose==1),c(1,2)], file)
+          }
+        )
+        
+        ac<-data.frame(Actnames$Action, It[[4]])
+        ac<-ac[which(ac$need>0),]
+        output[[paste0("Iteration",number,"Actions")]]<-renderDataTable({
+          ac
+        })
+        output[[paste0('Download',number,'Actions')]] <- downloadHandler(
+          filename = function() { paste('Iteration',number,'Actions', '.csv', sep='') },
+          content = function(file) {
+            write.csv(ac, file)
+          }
+        )
+        
+        #SHOW INTERVENTIONS TO ADD 
+        
+        #OutputTable in Iteration 1
+        output[[paste0("Iteration",number,"table")]]<-renderDataTable({It[[5]]})
+        output[[paste0('Download',number,'table')]] <- downloadHandler(
+          filename = function() { paste('Iteration',number,'table', '.csv', sep='') },
+          content = function(file) {
+            write.csv(It[[5]], file)
+          }
+        )
+        s11<-input[[paste0("Iteration",number,"table_rows_all")]] #Shows rows after being filtered
+        s12<-input[[paste0("Iteration",number,"table_rows_selected")]]
+        
+        
+        #OutputGraph in Iteration 1
+        output[[paste0("Iteration",number,"graph")]]<-renderPlot({
+          ExtraInt<-It[[5]]
+          s11<-isolate(input[[paste0("Iteration",number,"table_rows_all")]])
+          ExtraInt<-ExtraInt[s11,]
+          inp<-ExtraInt$Compl
+          outp<-ExtraInt$Out
+          dea.plot.frontier(inp,outp,txt=ExtraInt$Code,xlab="Added % Complexity",ylab="Added % Outcomes"
+                            ,pch=ifelse(outp>median(outp)&inp<median(inp), 19, 1))
+          
+          axis(1,labels=FALSE,tick=T,line=F,pos=median(outp),lwd.ticks=0)
+          axis(2,labels=FALSE,tick=T,line=F,pos=median(inp),lwd.ticks=0)
+          
+        })
+        
+        output[[paste0('Download',number,'graph')]] <- downloadHandler(
+          filename =  function() {
+            paste0('Download',number,'graph.png')
+          },
+          # content is a function with argument file. content writes the plot to the device
+          content = function(file) {
+            png(file) 
+            ExtraInt<-It[[5]]
+            s11<-isolate(input[[paste0("Iteration",number,"table_rows_all")]])
+            ExtraInt<-ExtraInt[s11,]
+            inp<-ExtraInt$Compl
+            outp<-ExtraInt$Out
+            dea.plot.frontier(inp,outp,txt=ExtraInt$Code,xlab="Added % Complexity",ylab="Added % Outcomes"
+                              ,pch=ifelse(outp>median(outp)&inp<median(inp), 19, 1))
+            
+            axis(1,labels=FALSE,tick=T,line=F,pos=median(outp),lwd.ticks=0)
+            axis(2,labels=FALSE,tick=T,line=F,pos=median(inp),lwd.ticks=0)
+            dev.off()  # turn the device off
+            
+          } 
+        )
+        
+        })
+        
+      })})
+  
+     
   
     
     
 })
-
-
-
+ })
+}
 
   
-
-  })
-  })
   
-  }
 
 
 
