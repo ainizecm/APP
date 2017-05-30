@@ -102,8 +102,8 @@ function(input, output, session) {
                                         data.frame(Block=strategy[[i]]$Block,
                                                      Descrition=strategy[[i]]$Description,
                                                      Code=strategy[[i]]$Code,
-                                                     Outcomes=strategy[[i]]$Average_Outcomes,
-                                                    Complexity=strategy[[i]]$Average_Complexity))
+                                                     Average_Outcomes=strategy[[i]]$Average_Outcomes,
+                                                    Average_Complexity=strategy[[i]]$Average_Complexity))
      }
   
      
@@ -125,7 +125,20 @@ function(input, output, session) {
        }
      )
      
+    
+ #Show graph with all interventions
+ output$totalgraph<-renderPlot({grafico(FinalInterventionsResults)})
+ output$downloadtotalgraph <- downloadHandler(
+   filename =   "Totalgaph.png",
+   # content is a function with argument file. content writes the plot to the device
+   content = function(file) {
+     png(file)
+     grafico(FinalInterventionsResults)
+     dev.off()  # turn the device off
      
+   }
+ )
+ 
   #Show results for each block-Table and plot
   output$RankingbyBlock<-renderUI({
     strategy_list<-lapply(1:n_blocks,function(i){

@@ -113,6 +113,9 @@ InterventionsOutputs<-function(){
       h2(class='ui header',id="All Interventions Ranking","All Interventions Ranking"),
       div(style = 'overflow-x: scroll',dataTableOutput(outputId = "FinalM")),
       div(downloadButton(outputId="downloadData1",'Download')),
+      #All inteventions graph
+      plotOutput("totalgraph"),
+      div(downloadButton(outputId='downloadtotalgraph','Download')),
       
       #Ranking by block
       h2(class='ui header',id="Ranking by Block","Ranking by Block"),
