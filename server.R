@@ -225,7 +225,7 @@ number<-0
    
     It<-strategy(x,y
                  ,PM
-                 ,FinalInterventionsResults$Outcomes
+                 ,FinalInterventionsResults$Average_Outcomes
                  ,criandstr$weights
                  ,n_bin_actions
                  ,n_totalint)
@@ -287,7 +287,7 @@ observeEvent(input[[paste0("Add",0)]],{
   y[which(It[[4]]$need==1)]<-1
   It<-strategy(x,y
                ,PM
-               ,FinalInterventionsResults$Outcomes
+               ,FinalInterventionsResults$Average_Outcomes
                ,criandstr$weights
                ,n_bin_actions
                ,n_totalint)
@@ -396,7 +396,7 @@ observeEvent(input[[paste0("Add",0)]],{
       y[which(It[[4]]$need==1)]<-1
       It<-strategy(x,y
                    ,PM
-                   ,FinalInterventionsResults$Outcomes
+                   ,FinalInterventionsResults$Average_Outcomes
                    ,criandstr$weights
                    ,n_bin_actions
                    ,n_totalint)
@@ -503,7 +503,7 @@ observeEvent(input[[paste0("Add",0)]],{
         y[which(It[[4]]$need==1)]<-1
         It<-strategy(x,y
                      ,PM
-                     ,FinalInterventionsResults$Outcomes
+                     ,FinalInterventionsResults$Average_Outcomes
                      ,criandstr$weights
                      ,n_bin_actions
                      ,n_totalint)
@@ -611,7 +611,7 @@ observeEvent(input[[paste0("Add",0)]],{
           y[which(It[[4]]$need==1)]<-1
           It<-strategy(x,y
                        ,PM
-                       ,FinalInterventionsResults$Outcomes
+                       ,FinalInterventionsResults$Average_Outcomes
                        ,criandstr$weights
                        ,n_bin_actions
                        ,n_totalint)
@@ -719,7 +719,7 @@ observeEvent(input[[paste0("Add",0)]],{
             y[which(It[[4]]$need==1)]<-1
             It<-strategy(x,y
                          ,PM
-                         ,FinalInterventionsResults$Outcomes
+                         ,FinalInterventionsResults$Average_Outcomes
                          ,criandstr$weights
                          ,n_bin_actions
                          ,n_totalint)
@@ -833,7 +833,7 @@ observeEvent(input[[paste0("Add",0)]],{
               y[which(It[[4]]$need==1)]<-1
               It<-strategy(x,y
                            ,PM
-                           ,FinalInterventionsResults$Outcomes
+                           ,FinalInterventionsResults$Average_Outcomes
                            ,criandstr$weights
                            ,n_bin_actions
                            ,n_totalint)
@@ -944,7 +944,7 @@ observeEvent(input[[paste0("Add",0)]],{
               #   y[which(It[[4]]$need==1)]<-1
               #   It<-strategy(x,y
               #                ,PM
-              #                ,FinalInterventionsResults$Outcomes
+              #                ,FinalInterventionsResults$Average_Outcomes
               #                ,criandstr$weights
               #                ,n_bin_actions
               #                ,n_totalint)
@@ -1053,7 +1053,7 @@ observeEvent(input[[paste0("Add",0)]],{
                 #   y[which(It[[4]]$need==1)]<-1
                 #   It<-strategy(x,y
                 #                ,PM
-                #                ,FinalInterventionsResults$Outcomes
+                #                ,FinalInterventionsResults$Average_Outcomes
                 #                ,criandstr$weights
                 #                ,n_bin_actions
                 #                ,n_totalint)
@@ -1165,7 +1165,7 @@ observeEvent(input[[paste0("Add",0)]],{
 #                     y[which(It[[4]]$need==1)]<-1
 #                     It<-strategy(x,y
 #                                  ,PM
-#                                  ,FinalInterventionsResults$Outcomes
+#                                  ,FinalInterventionsResults$Average_Outcomes
 #                                  ,criandstr$weights
 #                                  ,n_bin_actions
 #                                  ,n_totalint)
@@ -1275,7 +1275,7 @@ observeEvent(input[[paste0("Add",0)]],{
 #           y[which(It[[4]]$need==1)]<-1
 #           It<-strategy(x,y
 #                        ,PM
-#                        ,FinalInterventionsResults$Outcomes
+#                        ,FinalInterventionsResults$Average_Outcomes
 #                        ,criandstr$weights
 #                        ,n_bin_actions
 #                        ,n_totalint)
@@ -1386,7 +1386,7 @@ observeEvent(input[[paste0("Add",0)]],{
                     #     y[which(It[[4]]$need==1)]<-1
                     #     It<-strategy(x,y
                     #                  ,PM
-                    #                  ,FinalInterventionsResults$Outcomes
+                    #                  ,FinalInterventionsResults$Average_Outcomes
                     #                  ,criandstr$weights
                     #                  ,n_bin_actions
                     #                  ,n_totalint)
@@ -1494,7 +1494,7 @@ observeEvent(input[[paste0("Add",0)]],{
                     #       y[which(It[[4]]$need==1)]<-1
                     #       It<-strategy(x,y
                     #                    ,PM
-                    #                    ,FinalInterventionsResults$Outcomes
+                    #                    ,FinalInterventionsResults$Average_Outcomes
                     #                    ,criandstr$weights
                     #                    ,n_bin_actions
                     #                    ,n_totalint)
@@ -1612,7 +1612,7 @@ observeEvent(input[[paste0("Add",0)]],{
                     #         y[which(It[[4]]$need==1)]<-1
                     #         It<-strategy(x,y
                     #                      ,PM
-                    #                      ,FinalInterventionsResults$Outcomes
+                    #                      ,FinalInterventionsResults$Average_Outcomes
                     #                      ,criandstr$weights
                     #                      ,n_bin_actions
                     #                      ,n_totalint)
@@ -1719,7 +1719,7 @@ observeEvent(input[[paste0("Add",0)]],{
                     #           y[which(It[[4]]$need==1)]<-1
                     #           It<-strategy(x,y
                     #                        ,PM
-                    #                        ,FinalInterventionsResults$Outcomes
+                    #                        ,FinalInterventionsResults$Average_Outcomes
                     #                        ,criandstr$weights
                     #                        ,n_bin_actions
                     #                        ,n_totalint)
@@ -1831,7 +1831,7 @@ observeEvent(input[[paste0("Add",0)]],{
                     #             y[which(It[[4]]$need==1)]<-1
                     #             It<-strategy(x,y
                     #                          ,PM
-                    #                          ,FinalInterventionsResults$Outcomes
+                    #                          ,FinalInterventionsResults$Average_Outcomes
                     #                          ,criandstr$weights
                     #                          ,n_bin_actions
                     #                          ,n_totalint)
@@ -1941,7 +1941,7 @@ observeEvent(input[[paste0("Add",0)]],{
                     #               y[which(It[[4]]$need==1)]<-1
                     #               It<-strategy(x,y
                     #                            ,PM
-                    #                            ,FinalInterventionsResults$Outcomes
+                    #                            ,FinalInterventionsResults$Average_Outcomes
                     #                            ,criandstr$weights
                     #                            ,n_bin_actions
                     #                            ,n_totalint)
@@ -2054,7 +2054,7 @@ observeEvent(input[[paste0("Add",0)]],{
                     #                 y[which(It[[4]]$need==1)]<-1
                     #                 It<-strategy(x,y
                     #                              ,PM
-                    #                              ,FinalInterventionsResults$Outcomes
+                    #                              ,FinalInterventionsResults$Average_Outcomes
                     #                              ,criandstr$weights
                     #                              ,n_bin_actions
                     #                              ,n_totalint)
@@ -2165,7 +2165,7 @@ observeEvent(input[[paste0("Add",0)]],{
                     #                   y[which(It[[4]]$need==1)]<-1
                     #                   It<-strategy(x,y
                     #                                ,PM
-                    #                                ,FinalInterventionsResults$Outcomes
+                    #                                ,FinalInterventionsResults$Average_Outcomes
                     #                                ,criandstr$weights
                     #                                ,n_bin_actions
                     #                                ,n_totalint)
@@ -2272,7 +2272,7 @@ observeEvent(input[[paste0("Add",0)]],{
                     #                     y[which(It[[4]]$need==1)]<-1
                     #                     It<-strategy(x,y
                     #                                  ,PM
-                    #                                  ,FinalInterventionsResults$Outcomes
+                    #                                  ,FinalInterventionsResults$Average_Outcomes
                     #                                  ,criandstr$weights
                     #                                  ,n_bin_actions
                     #                                  ,n_totalint)
@@ -2382,7 +2382,7 @@ observeEvent(input[[paste0("Add",0)]],{
                     #                       y[which(It[[4]]$need==1)]<-1
                     #                       It<-strategy(x,y
                     #                                    ,PM
-                    #                                    ,FinalInterventionsResults$Outcomes
+                    #                                    ,FinalInterventionsResults$Average_Outcomes
                     #                                    ,criandstr$weights
                     #                                    ,n_bin_actions
                     #                                    ,n_totalint)
