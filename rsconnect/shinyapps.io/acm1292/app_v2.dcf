@@ -3,9 +3,9 @@ title: APP_v2
 account: acm1292
 server: shinyapps.io
 appId: 183243
-bundleId: 853329
+bundleId: 855640
 url: https://acm1292.shinyapps.io/app_v2/
-when: 1496650630.18158
+when: 1496774783.73082
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .RData|dev.R|README.md|server_22052017_ok.R|testing.R|ui_old.R|data/.DS_Store|data/.Rapp.history|data/cat_test2.xlsx|data/data_test.xlsx|data/data_test.xml|data/DATA2_v2.xlsx|data/marc_23052017.xlsx|data/plantilla.xlsx|data/plantllatest2_real.xlsx|data/plantllatest2.xlsx|data/Untitled spreadsheet.xlsx|library/.DS_Store|supportexamples/exampleforui.R

@@ -114,7 +114,7 @@ grafico<-function(results){
     eff<-dea(inp,outp)
     DEA<-data.frame(eff=eff$eff)
     dea.plot.frontier(inp,outp,txt=results$Code,xlab="Complexity",ylab="Outcomes",
-                    pch=ifelse(outp>median(outp)&inp<median(inp), 19, 1))
+                    pch=ifelse(outp>median(outp)&inp<median(inp), 19, 1),xlim=c(0,max(inp)+0.05),ylim=c(0,max(outp)+0.2))
       axis(1,labels=FALSE,tick=T,line=F,pos=median(outp),lwd.ticks=0)
       axis(2,labels=FALSE,tick=T,line=F,pos=median(inp),lwd.ticks=0)}
 
