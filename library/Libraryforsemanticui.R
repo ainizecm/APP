@@ -21,8 +21,6 @@ sidebar1 <- function() {
   div(class="ui sidebar inverted vertical visible menu",
       div(style = "width: 100%; height:100px"),
       div(class="item",
-          div(class="active header", "Data Settings")),
-      div(class="item",
           div(class="active header", "Interventions"),
           div(class="menu",
               a(class="item", href="#Ranking by Block", "Ranking by Block"),

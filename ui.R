@@ -1,11 +1,25 @@
 
 
-navbarPage("MY APPLICATION TITLE",
+navbarPage("Xtrategy",
            #choose a theme
            #theme = shinytheme("cerulea"), 
            
            #Define the panels
-           tabPanel("Model Description")
+           tabPanel("Model Description"
+                    ,fluidRow(includeMarkdown("Model_Description.Rmd")))
+           ,
+           tabPanel("Data Settings"
+           ,
+           semanticPage(
+             tags$head(tags$style(HTML(css)))
+             ,
+             useShinyjs(),
+             div(style="margin-left: 100px",
+                 div(id="Configure your data", 
+                     class="ui container",
+                     datasettings())
+             )
+             ))
            ,
            
            tabPanel("Analysis"
@@ -14,17 +28,17 @@ navbarPage("MY APPLICATION TITLE",
                       tags$head(tags$style(HTML(css)))
                     ,
                       useShinyjs(),
-                      sidebar1(),
-                      div(style="margin-left: 210px",
-                          div(id="Configure your data", class="ui container",
-                              datasettings(),
+                    conditionalPanel(condition='input.compute== 1',
+                    sidebar1(),
+                    div(style="margin-left: 210px",
+                          div(
                               InterventionsOutputs(),
                               ActionsOutput(),
                               ExtraTables()
                           
                     )
                     
-           ))),
+           )))),
            
            
            # ####################################
@@ -69,16 +83,17 @@ navbarPage("MY APPLICATION TITLE",
            
            
            
-           ),
-           
-           
-           
-           navbarMenu("More",
-                      tabPanel("About",
-                               fluidRow(includeMarkdown("about.Rmd")
-                               )
-                      )
            )
+           #,
+           
+           
+           
+          #navbarMenu("More",
+          #           tabPanel("About",
+          #                     fluidRow(includeMarkdown("about.Rmd")
+          #                    )
+          #            )
+          # )
            
 ) 
 
