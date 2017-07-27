@@ -19,7 +19,7 @@ library(tidyr)
 
 setwd("~/git/AINIZE/Master/APP")
 #EXCEL<-'data/DATA2_v2.xlsx'
-EXCEL<-'data/marc_23052017.xlsx'
+EXCEL<-'data/Colombia/Colombia_test.xlsx'
 excel<-EXCEL
 
 
@@ -27,28 +27,32 @@ excel<-EXCEL
 source("library/LibraryforRankingAnalysis.R")
 source("library/LibraryforIterativeTool.R")
 #Number of Blocks
-n_blocks=7#4#3#4
+n_blocks=1#4#3#4
 
 #Number of Total Interventions
-n_totalint=85 #54#85 #54
+n_totalint=10 #54#85 #54
 
 #Number of respondants for each block
-n_resp=c(3,4,3,3,3,3,4)#c(3,4,3,3)#c(2,2,2) #c(3,4,3,3)
+n_resp=c(3)#,4,3,3,3,3,4)#c(3,4,3,3)#c(2,2,2) #c(3,4,3,3)
 
 #Number of Interventions in each block
 #n_int=as.numeric(unlist(strsplit(as.character('19/14/11/10'),"/")))
-n_int=as.numeric(unlist(strsplit(as.character('11/11/15/12/15/12/9'),"/")))
+n_int=as.numeric(unlist(strsplit(as.character('10'),"/")))
 #Number of actions
-n_bin_actions<-57
+n_bin_actions<-61
+
 
 #Number of respondants for actions complexity
 n_cri_resp<-4
 
 lastrow<-6+n_totalint
 
+
+
 ###1.Read PM
 PM<-read.xlsx2(EXCEL,startRow = 5,"PerformanceMatrix",encoding='UTF-8',header=TRUE)
 PM[,c("encoding")]<-NULL
+PM[,c(4:ncol(PM))]<-apply(PM[,c(4:ncol(PM))],c(1,2),as.numeric)
 ###2.read criteria weights and compine with action compl
 criandstr<-FinalWeights(EXCEL,n_bin_actions,n_cri_resp)
 

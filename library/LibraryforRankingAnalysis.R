@@ -36,8 +36,8 @@ AccCompl<-function(excel,n_bin_actions=57,n_cri_resp=4){
 ##a) Normalize de complexity within all the actions in a criteria
 ##b) Mulitply the compl by the criteria weight for a final result
 ##c) Move to the end Financing criteria (B8 B9 B10) for the facilitation of the interventions analysis
-FinalWeights<-function(excel,n_bin_actions=57,n_cri_resp=4){
-  acc<-AccCompl(excel,n_bin_actions=57,n_cri_resp=4) #use the above funtion 5 to get actions complexity
+FinalWeights<-function(excel,n_bin_actions,n_cri_resp){
+  acc<-AccCompl(excel,n_bin_actions,n_cri_resp) #use the above funtion 5 to get actions complexity
   #weig<-criteriaweights(excel,numberofrespondants) #Only use if the criteia weights are computed again
   cri<-CriteriaWeights #read the stored criteria weights
   
@@ -65,7 +65,7 @@ FinalWeights<-function(excel,n_bin_actions=57,n_cri_resp=4){
 #7.Compute the results for each respondant. Uses the weights computed with funtion 6
 #NOTE:The financing scores do not take into account the choosen way of financing
 
-resultsbyResp<-function(excel,blocksheet,rowindex,weights,n_bin_actions=57){
+resultsbyResp<-function(excel,blocksheet,rowindex,weights=criandstr,n_bin_actions=57){
   #lastcolum<-n_bin_actions+15
   #Read the matrix on the selected rows
   PERM<-read.xlsx(excel,sheetIndex = blocksheet,
@@ -82,13 +82,18 @@ resultsbyResp<-function(excel,blocksheet,rowindex,weights,n_bin_actions=57){
   #it is penalized just if some kind of fin source is needed.
   ActionsComplmark<-as.matrix(PERM[,14:(n_bin_actions+9)])%*%as.numeric(t(weights[11:(n_bin_actions+6),]$weights)) #Same as for outcomes, just multply results by weights
   
-  #for financial source make it one if any of the options is selected
-  fsourcemarks<-rowSums(PERM[,c('F1','F2','F3','F4')])/rowSums(PERM[,c('F1','F2','F3','F4')])
+  #for financial source make it one if any of the options is selected(what if the financial acctions change?)
+  #Which are the finantial accions?Read them from the actions sheet
+
+  lastrow<-n_bin_actions+1
+
+  factions<-data.frame(read.xlsx(excel, "ACTIONS",
+                              rowIndex = c(1:lastrow),
+                              colIndex=c(1:4)))
+  factions<-as.vector(factions[which(factions$Criteria=='B10'),3])
+  fsourcemarks<-rowSums(PERM[,factions])/rowSums(PERM[,factions])
   fsourcemarks[is.na(fsourcemarks)] <- 0
-  fsourcemarks<-as.matrix(fsourcemarks)*sum(weights[which(weights$Criteria=="F1"
-                                                          |weights$Criteria=="F2"
-                                                          |weights$Criteria=="F3"
-                                                          |weights$Criteria=="F4"),]$weights) #mutiply that result with the sum of the complexity of the financial sources
+  fsourcemarks<-as.matrix(fsourcemarks)*sum(weights[which(weights$Criteria %in% factions),]$weights) #mutiply that result with the sum of the complexity of the financial sources
   #cost mars
   costimpmarks<-as.matrix(PERM[,c('B8','B9')])%*%as.numeric(t(weights[which(weights$Criteria=="B8"
                                                                               |weights$Criteria=="B9"),]$weights)) #Cost

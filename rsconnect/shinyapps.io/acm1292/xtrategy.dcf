@@ -1,0 +1,11 @@
+name: xtrategy
+title: Xtrategy
+account: acm1292
+server: shinyapps.io
+appId: 199971
+bundleId: 917650
+url: https://acm1292.shinyapps.io/xtrategy/
+when: 1501157416.6467
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|FinalInterventionsResults.csv|Model_Description.html|testing.R|archive/dev.R|archive/server_22052017_ok.R|archive/ui_old.R|data/.DS_Store|data/.Rapp.history|data/~$DATA2_v2.xlsx|data/cat_test2.xlsx|data/data_test.xlsx|data/data_test.xml|data/DATA2_v2.xlsx|data/marc_23052017.xlsx|data/memory test.xlsx|data/plantilla.xlsx|data/plantllatest2_real.xlsx|data/plantllatest2.xlsx|data/Untitled spreadsheet.xlsx|data/Colombia/~$Colombia_test.xlsx|data/Colombia/Colombia_test.xlsx|data/Colombia/Datos Matriz _ainize.xlsx|library/.DS_Store|library/LibraryforCriteriaWeights.R|supportexamples/exampleforui.R

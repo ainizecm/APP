@@ -1,7 +1,7 @@
 ---
 title: "Model Description"
 output: html_document
-theme:lumen
+theme: "lumen"
 ---
 
 
@@ -9,4 +9,3 @@ theme:lumen
 ## Model Description
 
 This is an R Markdown for the model description
-
