@@ -52,7 +52,7 @@ needed_actions_complexity<-function(x=rep(0,n_totalint),y=rep(0,n_bin_actions),w
 
 
 # #computes list of yet non included interventions and the new needed actions and combined complexity
-extra_intervention<-function(x=rep(0,n_totalint),y=rep(0,n_bin_actions),PM,outmark,weights_vector,n_bin_actions){
+extra_intervention<-function(x=rep(0,n_totalint),y=rep(0,n_bin_actions),PM,outmark,weights_vector=criandstr$weights,n_bin_actions){
         lastcolumn<-(14+n_bin_actions+1)
         
         #See how the situation is at that point
@@ -81,7 +81,7 @@ extra_intervention<-function(x=rep(0,n_totalint),y=rep(0,n_bin_actions),PM,outma
         
         extra_interventions<-data.frame(extra_interventions[which(x==0),])
         extraac<-data.frame(extraac[which(x==0),])
-        extraac<-apply(extraac,c(1,2),as.numeric)
+        extraacc<-data.frame(extraac[,c(1:3)],apply(extraac[,c(4:ncol(extraac))],c(1,2),as.numeric))
         print('starting the loop')
         for (i in 1:nrow(extra_interventions)) {
           xnew<-x
