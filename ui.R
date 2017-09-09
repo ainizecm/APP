@@ -5,8 +5,11 @@ navbarPage("Xtrategy",
            #theme = shinytheme("cerulea"), 
            
            #Define the panels
-           tabPanel("Model Description"
-                    ,fluidRow(includeMarkdown("Model_Description.Rmd")))
+           tabPanel("Model Description and How To",
+                    includeHTML("Xtrategy_v2.html")
+                          #  Xtrategy())
+)
+           
            ,
            tabPanel("Data Settings"
            ,

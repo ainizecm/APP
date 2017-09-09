@@ -19,7 +19,7 @@ library(tidyr)
 
 setwd("~/git/AINIZE/Master/APP")
 #EXCEL<-'data/DATA2_v2.xlsx'
-EXCEL<-'data/Colombia/Colombia_test.xlsx'
+EXCEL<-'data/Datos Matriz_Ainize.xlsx'
 excel<-EXCEL
 
 
@@ -27,23 +27,23 @@ excel<-EXCEL
 source("library/LibraryforRankingAnalysis.R")
 source("library/LibraryforIterativeTool.R")
 #Number of Blocks
-n_blocks=1#4#3#4
+n_blocks=10#4#3#4
 
 #Number of Total Interventions
-n_totalint=10 #54#85 #54
+n_totalint=116 #54#85 #54
 
 #Number of respondants for each block
-n_resp=c(3)#,4,3,3,3,3,4)#c(3,4,3,3)#c(2,2,2) #c(3,4,3,3)
+n_resp=c(3,3,3,3,3,3,3,3,3,3)#,4,3,3,3,3,4)#c(3,4,3,3)#c(2,2,2) #c(3,4,3,3)
 
 #Number of Interventions in each block
 #n_int=as.numeric(unlist(strsplit(as.character('19/14/11/10'),"/")))
-n_int=as.numeric(unlist(strsplit(as.character('10'),"/")))
+n_int=as.numeric(unlist(strsplit(as.character('12/15/13/17/10/14/10/9/12/4'),"/")))
 #Number of actions
 n_bin_actions<-61
 
 
 #Number of respondants for actions complexity
-n_cri_resp<-4
+n_cri_resp<-2
 
 lastrow<-6+n_totalint
 

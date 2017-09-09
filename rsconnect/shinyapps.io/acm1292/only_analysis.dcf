@@ -1,0 +1,11 @@
+name: only_analysis
+title: Only_Analysis
+account: acm1292
+server: shinyapps.io
+appId: 206226
+bundleId: 947392
+url: https://acm1292.shinyapps.io/only_analysis/
+when: 1503239710.16141
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|FinalInterventionsResults.csv|Model_Description.html|testing.R|archive/dev.R|archive/server_22052017_ok.R|archive/ui_old.R|data/.DS_Store|data/.Rapp.history|data/cat_test2.xlsx|data/data_test.xlsx|data/data_test.xml|data/DATA2_v2.xlsx|data/marc_23052017.xlsx|data/memory test.xlsx|data/plantilla.xlsx|data/plantllatest2_real.xlsx|data/plantllatest2.xlsx|data/Untitled spreadsheet.xlsx|data/Colombia/.DS_Store|data/Colombia/~$Colombia_test.xlsx|data/Colombia/Colombia_test.xlsx|data/Colombia/Datos Matriz _ainize.xlsx|data/Colombia/Datos Matriz_Correctos_noformat.xlsx|data/Colombia/Datos Matriz_Correctos.xlsx|data/Colombia/No_format.xlsx|library/.DS_Store|library/LibraryforCriteriaWeights.R|supportexamples/exampleforui.R

@@ -9,7 +9,43 @@ $('.accordion').accordion({selector: {trigger: '.title .icon'}}).accordion('clos
 $('.ui.dropdown').dropdown({});
 $('.rating').rating('setting', 'clearable', true);
 "
+################################
+#############HOME#############(not used)
+##############################
 
+sidebar_home <- function() {
+  div(class="ui sidebar inverted vertical visible menu",
+      div(style = "width: 100%; height:100px"),
+      div(class="item",
+          div(class="active header", "Xtrategy")),
+      div(class="item",
+          div(class="active header", "Model Description")),
+      div(class="item",
+          div(class="active header", "How To"))
+          )
+}
+
+
+# Xtrategy <- function() {
+#   ###TITLE###
+#   div(class = "ui raised segment",
+#       h2(class="ui icon header",
+#          id="Xtrategy",
+#          uiicon("crosshairs"),
+#          div(class="content", "Xtrategy",
+#              div(class="sub header", "Modelling Complexity for Efficient Planning"))),
+#       div(style = "width: 100%; height:100px"),
+#       ###INPUT FILE###
+#       div(class = "content", p("Do you have a lot of goals to achieve? 
+# 
+#                                Can't you decide which to focus on? Are your resources limited? 
+#                                
+#                                Would you like to know which is the best set of goals to aim for and which actions do you need to achieve them?
+#                                
+#                                Then... **Xtrategy** would help you with it.
+#                                ")))
+#       
+#       }
 
 
 ####################################
@@ -57,24 +93,24 @@ datasettings <- function() {
           div(class = "column", 
               numericInput('n_totalint', 
                            "Number of Total Interventions",
-                           value=85, min = NA, max = NA, step = NA,
+                           value=116, min = NA, max = NA, step = NA,
                            width = NULL)), 
           div(class = "column", 
               numericInput('n_blocks', 
                            "Number of Blocks", 
-                           value=7, min = NA, max = NA, step = NA,
+                           value=10, min = NA, max = NA, step = NA,
                            width = NULL)) 
       ),
       div(class = "ui stackable two column grid", 
           div(class = "column", 
               textInput('n_int', 
                         "Number of Interventions in each block  (write them separate by /,i.e.,if 3 blocks 19/10/15)",
-                        value='11/11/15/12/15/12/9', 
+                        value='12/15/13/17/10/14/10/9/12/4', 
                         width = NULL)), 
           div(class = "column", 
               textInput('n_resp', 
                         "Number of Respondants in each block  (write them separate by /,i.e.,if 3 blocks 3/5/3)",
-                        value='3/4/3/3/3/3/4',
+                        value='3/3/3/3/3/3/3/3/3/3',
                         width = NULL)) 
       ),
       
@@ -83,12 +119,12 @@ datasettings <- function() {
       div(class = "ui stackable two column grid", div(class = "column", 
                                                       numericInput('n_bin_actions', 
                                                                    "Number of Actions",
-                                                                   value=57, min = NA, max = NA, step = NA,
+                                                                   value=61, min = NA, max = NA, step = NA,
                                                                    width = NULL)), 
           div(class = "column", 
               numericInput('n_cri_resp', 
                            "Number of Respondants for actions complexity",
-                           value=4, min = NA, max = NA, step = NA,
+                           value=3, min = NA, max = NA, step = NA,
                            width = NULL)) 
       ),
       
@@ -147,7 +183,7 @@ ExtraTables<-function(){
       
       #Ranking by block
       h2(class='ui header',id="Detailed Results","Detailed Results"),
-      uiOutput("DetailedResults"),
+      div(style = 'overflow-x: scroll',dataTableOutput(outputId = "DetailedResults")),
       
       #All interventions Ranking
       h2(class='ui header',id="Actions Survey","Actions Survey"),
