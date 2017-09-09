@@ -5,8 +5,8 @@ navbarPage("Xtrategy",
            #theme = shinytheme("cerulea"), 
            
            #Define the panels
-           tabPanel("Model Description and How To",
-                    includeHTML("Xtrategy_v2.html")
+           tabPanel("Model Description and How To"
+                    ,includeHTML("Xtrategy_v2.html")
                           #  Xtrategy())
 )
            
@@ -36,8 +36,9 @@ navbarPage("Xtrategy",
                     div(style="margin-left: 210px",
                           div(
                               InterventionsOutputs(),
-                              ActionsOutput(),
-                              ExtraTables()
+                              ActionsOutput()
+                              #,
+                              #ExtraTables()
                           
                     )
                     
