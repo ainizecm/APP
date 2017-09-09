@@ -52,8 +52,7 @@ navbarPage("Xtrategy",
                     semanticPage(
                       tags$head(tags$style(HTML(css))),
                       useShinyjs(),
-                      sidebar2(),
-                      div(style="margin-left: 210px",
+                      div(
                           div(id="Iterations", class="ui container",
                               Iteration(0),
                               conditionalPanel(condition='input.Add0== 1',Iteration(1)),

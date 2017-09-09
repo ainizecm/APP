@@ -63,7 +63,7 @@ Block 4 https://es.surveymonkey.com/r/WPLXHFB
 
 Once you have all your results back you will need to provide them in a matrix form to the program to be able to read and interpret them. We call this a performance matrix.
 
-You can download an example of the template filled with dummy data here: **CLICK HERE TO DOWNLOAD AN EXCEL TEMPLATE**
+You can download an example of the template filled with dummy data [**here**](https://github.com/ainizecm/APP/raw/master/data/Template.xlsx).
 
 Once you have filled up the template you are ready to use the program!
 
@@ -81,7 +81,7 @@ Once you have understood the trends and individual results you can start constru
 
 **Strategy Constuction**
 
-Here you will be able to gradually add Interventions to you Xtrategy until you get to a scenario in which you believe it is completed.
+Here you will be able to gradually add Interventions to your Xtrategy until you get to a scenario in which you believe it is completed.
 
 The first thing you will see its the scenario at Iteration 0. Obviously this means there are no Interventions in your Xtrategy are therefore the Outputs and Complesxity are null and Interventions and Actions tables are empty.
 
