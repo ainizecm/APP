@@ -3,9 +3,9 @@ title: Xtrategy
 account: acm1292
 server: shinyapps.io
 appId: 199971
-bundleId: 974194
+bundleId: 988974
 url: https://acm1292.shinyapps.io/xtrategy/
-when: 1504965511.10133
+when: 1505895111.06295
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: .RData|FinalInterventionsResults.csv|Model_Description.html|Model_Description.Rmd|testing.R|Xtrategy.html|Xtrategy.Rmd|archive/dev.R|archive/server_22052017_ok.R|archive/ui_old.R|data/.DS_Store|data/.Rapp.history|data/cat_test2.xlsx|data/data_test.xlsx|data/DATA2_v2.xlsx|data/marc_23052017.xlsx|data/memory test.xlsx|data/plantilla.xlsx|data/plantllatest2_real.xlsx|data/plantllatest2.xlsx|data/Untitled spreadsheet.xlsx|data/Colombia/.DS_Store|data/Colombia/~$Colombia_test.xlsx|data/Colombia/Datos_Colombia.xlsx|library/.DS_Store|library/LibraryforCriteriaWeights.R|supportexamples/exampleforui.R
+ignoredFiles: FinalInterventionsResults.csv|Model_Description.html|Model_Description.Rmd|testing.R|archive/dev.R|archive/server_22052017_ok.R|archive/ui_old.R|data/.DS_Store|data/.Rapp.history|data/Template.xlsx|data/Archive/cat_test2.xlsx|data/Archive/data_test.xlsx|data/Archive/data_test.xml|data/Archive/DATA2_v2.xlsx|data/Archive/marc_23052017.xlsx|data/Archive/memory test.xlsx|data/Archive/plantilla.xlsx|data/Archive/plantllatest2_real.xlsx|data/Archive/plantllatest2.xlsx|data/Archive/Untitled spreadsheet.xlsx|data/Archive/Colombia/~$Colombia_test.xlsx|data/Archive/Colombia/Datos_Colombia.xlsx|supportexamples/exampleforui.R
