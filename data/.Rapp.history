@@ -1,2 +1,3 @@
 load("/Users/ainize.cidoncha/git/AINIZE/Master/APP/data/CriteriaWeights.Rda")
 load("/Users/ainize.cidoncha/git/AINIZE/Master/APP/data/CriteriaWeights.Rdata")
+load("/Users/ainize.cidoncha/ainizecm_git/APP/data/criteria.rds")

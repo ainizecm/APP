@@ -38,11 +38,8 @@ navbarPage("Xtrategy",
                               InterventionsOutputs(),
                               ActionsOutput()
                               #,
-                              #ExtraTables()
-                          
-                    )
-                    
-           )))),
+                              #ExtraTables()          
+                    ))))),
            
            
            # ####################################
@@ -63,40 +60,9 @@ navbarPage("Xtrategy",
                               conditionalPanel(condition='input.Add4== 1',Iteration(5)),
                               conditionalPanel(condition='input.Add5== 1',Iteration(6)),
                               conditionalPanel(condition='input.Add6== 1',Iteration(7))
-                              #conditionalPanel(condition='input.Add7== 1',Iteration(8))
-                             # conditionalPanel(condition='input.Add8== 1',Iteration(9))
-                              #conditionalPanel(condition='input.Add9== 1',Iteration(10))
-                              # conditionalPanel(condition='input.Add10== 1',Iteration(11))
-                              # conditionalPanel(condition='input.Add11== 1',Iteration(12)),
-                              # conditionalPanel(condition='input.Add12== 1',Iteration(13)),
-                              # conditionalPanel(condition='input.Add13== 1',Iteration(14)),
-                              # conditionalPanel(condition='input.Add14== 1',Iteration(15)),
-                              # conditionalPanel(condition='input.Add15== 1',Iteration(16)),
-                              # conditionalPanel(condition='input.Add16== 1',Iteration(17)),
-                              # conditionalPanel(condition='input.Add17== 1',Iteration(18)),
-                              # conditionalPanel(condition='input.Add18== 1',Iteration(19)),
-                              # conditionalPanel(condition='input.Add19== 1',Iteration(20))
-                              
-                              
-                              
-                          )
+                            )
                       )
                     )
-           
-           
-           
-           
-           )
-           #,
-           
-           
-           
-          #navbarMenu("More",
-          #           tabPanel("About",
-          #                     fluidRow(includeMarkdown("about.Rmd")
-          #                    )
-          #            )
-          # )
-           
+           )             
 ) 
 
