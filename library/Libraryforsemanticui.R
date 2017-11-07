@@ -144,24 +144,40 @@ ActionsOutput<-function(){
   )
 }
 
-ExtraTables<-function(){
+TotalTableOutputs<-function(){
   #TITLE
   div(class = "ui raised segment",
       h1(class="ui icon header",
-         id="Extra Tables",
+         id="TotalTable",
          uiicon("Doctor"),
-         div(class="content", "Extra Tables",
-             div(class="sub header", "Extra tables for deeper analysis and checks"))),
-
-      #Ranking by block
-      h2(class='ui header',id="Detailed Results","Detailed Results"),
-      uiOutput("DetailedResults"),
-
+         div(class="content", "TotalTable",
+             div(class="sub header", "TotalTable"))),
+      
       #All interventions Ranking
-      h2(class='ui header',id="Actions Survey","Actions Survey"),
-      uiOutput( "ActionsSurvey")
+      h2(class='ui header',id="TotalTable","TotalTable"),
+      div(style = 'overflow-x: scroll',dataTableOutput(outputId = "TotalTable")),
+      div(downloadButton(outputId="downloadTotalTable",'Download'))
   )
 }
+
+# ExtraTables<-function(){
+#   #TITLE
+#   div(class = "ui raised segment",
+#       h1(class="ui icon header",
+#          id="Extra Tables",
+#          uiicon("Doctor"),
+#          div(class="content", "Extra Tables",
+#              div(class="sub header", "Extra tables for deeper analysis and checks"))),
+# 
+#       #Ranking by block
+#       h2(class='ui header',id="Detailed Results","Detailed Results"),
+#       uiOutput("DetailedResults"),
+# 
+#       #All interventions Ranking
+#       h2(class='ui header',id="Actions Survey","Actions Survey"),
+#       uiOutput( "ActionsSurvey")
+#   )
+# }
 
 
 ####################################

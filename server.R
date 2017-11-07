@@ -66,6 +66,7 @@ function(input, output, session) {
     
      #Define strategy data frame to populate later
      FinalInterventionsResults<-data.frame(Block=vector(),Description=vector(),Code=vector(),Average_Outcomes=vector(),Average_Complexity=vector())
+     TotalTable<-data.frame()
      strategy<-list()
      blocknames<-vector()
      
@@ -94,6 +95,8 @@ function(input, output, session) {
        print(paste("Generating averages",j, "in block",i))
        strategy[[i]]$Average_Outcomes<-round(rowMeans(strategy[[i]][which(colnames(strategy[[i]])=="OutcomesMark")]),2)
        strategy[[i]]$Average_Complexity<-round(rowMeans(strategy[[i]][which(colnames(strategy[[i]])=="ComplexityMark")]),2)
+       strategy[[i]]$STD_Outcomes<-round(apply(strategy[[i]][which(colnames(strategy[[i]])=="OutcomesMark")],1,sd),2)
+       strategy[[i]]$STD_Complexity<-round(apply(strategy[[i]][which(colnames(strategy[[i]])=="ComplexityMark")],1,sd),2)
        
        
        #Generate a table showing the final results for each intervention
@@ -103,7 +106,11 @@ function(input, output, session) {
                                                      Descrition=strategy[[i]]$Description,
                                                      Code=strategy[[i]]$Code,
                                                      Average_Outcomes=strategy[[i]]$Average_Outcomes,
-                                                    Average_Complexity=strategy[[i]]$Average_Complexity))
+                                                    Average_Complexity=strategy[[i]]$Average_Complexity,
+                                                   STD_Outcomes =strategy[[i]]$STD_Outcomes,
+                                                   STD_Complexity =strategy[[i]]$STD_Complexity))
+       
+       TotalTable<-rbind(TotalTable,strategy[[i]])
      }
   
      
@@ -194,15 +201,29 @@ function(input, output, session) {
   
   ##Details by respondant if you want to check some results
   #Show results for each respondant  
-  output$DetailedResults<-renderUI({
-    strategy_list<-lapply(1:n_blocks,function(i){renderDataTable({strategy[[i]]},caption=paste0('Block',i))})
-    do.call(tagList, strategy_list)
+  
+  
+  #Show the final matrix
+  output$TotalTable<-DT::renderDataTable({datatable(TotalTable,
+                                                filter = 'top',class = 'white-space: nowrap')
   })
   
+  output$downloadTotalTable <- downloadHandler(
+    filename = function() { paste('TotalTable', '.csv', sep='') },
+    content = function(file) {
+      write.csv(TotalTable, file)
+    }
+  )
   
-  output$ActionsSurvey<-renderDataTable({
-    Comp<-AccCompl(EXCEL,n_bin_actions=57,n_cri_resp=4)
-  },caption="Actions Complexity by Respondant")
+  # output$DetailedResults<-renderUI({
+  #   strategy_list<-lapply(1:n_blocks,function(i){renderDataTable({strategy[[i]]},caption=paste0('Block',i))})
+  #   do.call(tagList, strategy_list)
+  # })
+  # 
+  # 
+  # output$ActionsSurvey<-renderDataTable({
+  #   Comp<-AccCompl(EXCEL,n_bin_actions=57,n_cri_resp=4)
+  # },caption="Actions Complexity by Respondant")
 
  #Maybe show something about the criteria weights and the actions complexity??  
   
